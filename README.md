@@ -23,7 +23,7 @@ cd /root
 git clone https://github.com/ceremcem/build-freecad-asm3
 ```
 
-### 3. Build with a single command: 
+### 3. Install or Update FreeCAD-Asm3
 
 
 ```console
