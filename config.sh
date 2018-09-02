@@ -1,0 +1,2 @@
+FREECAD=/opt/FreeCAD
+
