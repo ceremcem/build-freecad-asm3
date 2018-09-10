@@ -29,4 +29,4 @@ make install
 ln -sf /opt/FreeCAD/bin/FreeCAD /usr/bin/freecad-git
 
 # Install Assembly3 Workbench
-$_sdir/update-asm3.sh
+$_sdir/install-asm3.sh

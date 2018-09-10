@@ -99,6 +99,9 @@ $deps/occt.sh
 $deps/netgen.sh
 $deps/vtk.sh
 $deps/eigen.sh
+
+$_sdir/install-fc.sh
+
 #$deps/calculix.sh # FIXME can not generate `cgx`
 $deps/gmsh.sh
 
