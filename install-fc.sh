@@ -10,25 +10,23 @@ cd
 #--------------------------------` \
 # get FreeCAD` \
 git clone --single-branch -b LinkStage3 https://github.com/realthunder/FreeCAD.git || { cd FreeCAD && git pull; }
-#cd FreeCAD/ext/
-#https://github.com/realthunder/FreeCAD_assembly3
 
 # building FreeCAD
-cd && mkdir -p build && cd build
+cd && mkdir -p fc-build && cd fc-build
 
-
-cmake ../FreeCAD \
-	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
+cmake 	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
-	-DNETGEN_ROOT=$FREECAD \
-	-DBUILD_FEM_NETGEN=ON
+	-DFREECAD_USE_OCC_VARIANT="Official Version" \
+	../FreeCAD
+#	-DNETGEN_ROOT=$FREECAD
+#	-DBUILD_FEM_NETGEN=ON
 
-# Make FreeCAD
-cd && cd build
+cd && cd fc-build
 make -j$(nproc)
 
-# Install FreeCAD` \
+# Install FreeCAD
 make install
 ln -sf /opt/FreeCAD/bin/FreeCAD /usr/bin/freecad-git
 
+# Install Assembly3 Workbench
 $_sdir/update-asm3.sh
