@@ -7,13 +7,13 @@ safe_source $_sdir/../config.sh
 
 ### Calculix and CGX
 #-------------------------
+
+sudo apt install gfortran xorg-dev #libxmu-headers
+
 cd
 git clone https://github.com/luvres/calculix.git || { cd calculix && git pull && cd ..; }
-cd calculix/ \
-        && ccx_VERSION=`cat ./install | grep "export PROGSDIR=" | sed 's/^.*CalculiX-//'` \
-	&& ./install
-
-cp $HOME/CalculiX-${ccx_VERSION}/bin/ccx_${ccx_VERSION} /usr/bin/ccx \
-	&& cp $HOME/CalculiX-${ccx_VERSION}/bin/cgx /usr/bin/cgx \
-
-
+cd calculix
+ccx_VERSION=`cat ./install | grep "export PROGSDIR=" | sed 's/^.*CalculiX-//'`
+./install
+cp $HOME/CalculiX-${ccx_VERSION}/bin/ccx_${ccx_VERSION} /usr/bin/ccx
+cp $HOME/CalculiX-${ccx_VERSION}/bin/cgx /usr/bin/cgx
