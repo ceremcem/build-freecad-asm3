@@ -23,21 +23,19 @@ cd /root
 git clone https://github.com/ceremcem/build-freecad-asm3
 ```
 
-### 3. Install or Update Dependencies
+### 3. Install or Update FreeCAD-Asm3
 
 
 ```console
-# ./build-freecad-asm3/install-deps.sh
+# ./build-freecad-asm3/install.sh 
 ```
 
-### 4. Install or Update FreeCAD-Asm3
+> In order to build only LinkStage3 branch and update Asm3 WB:
+> 
+>       ./build-freecad-asm3/install-fc.sh
+>
 
-
-```console
-# ./build-freecad-asm3/install-fc.sh 
-```
-
-### Run the FreeCAD
+### 4. Run the FreeCAD
 
 If you used VirtualBox, you can run FreeCAD directly within the VirtualBox: 
 
