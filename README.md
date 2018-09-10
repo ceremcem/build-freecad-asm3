@@ -27,7 +27,8 @@ git clone https://github.com/ceremcem/build-freecad-asm3
 
 
 ```console
-# ./build-freecad-asm3/install-fc.sh
+# ./build-freecad-asm3/install-deps.sh  # <- for the first time only
+# ./build-freecad-asm3/install-fc.sh 
 ```
 
 ### Run the FreeCAD
