@@ -33,25 +33,29 @@ git clone https://github.com/ceremcem/build-freecad-asm3
 
 ### 4. Run the FreeCAD
 
-If you used VirtualBox, you can run FreeCAD directly within the VirtualBox GUI: 
+If you used VirtualBox (or a real machine), you can run FreeCAD directly within the machine: 
 
 ```
 freecad-git
 ```
 
-If you use LXC (or you may use this technique with any kind of remote machine):
+Otherwise, run `freecad-git` over SSH by `X Forwarding`:
 
 ```
-ssh -XC freecad-machine freecad-git
+ssh -XC ip-or-name-of-freecad-machine freecad-git
 ```
 
 # Tips 
 
 Preferably add `.bashrc` the following line: 
  
-     alias freecad-asm3-remote='ssh -XC ip-or-name-of-freecad-machine freecad-git'
+  ```bash
+  alias freecad-asm3-remote='ssh -XC ip-or-name-of-freecad-machine freecad-git'
+  ```
  
 and then run FreeCAD-Asm3 by simply issuing: 
  
-     local$ freecad-asm3-remote 
+   ```console
+   local$ freecad-asm3-remote 
+   ```
  
