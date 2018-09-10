@@ -5,15 +5,13 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 
 safe_source $_sdir/config.sh
 
+### LinkStage3 latest Github commit
+#----------------------------------
 cd
-### FreeCAD latest Github commit
-#--------------------------------` \
-# get FreeCAD` \
 git clone --single-branch -b LinkStage3 https://github.com/realthunder/FreeCAD.git || { cd FreeCAD && git pull; }
 
-# building FreeCAD
+# build
 cd && mkdir -p fc-build && cd fc-build
-
 cmake ../FreeCAD \
  	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
@@ -25,7 +23,7 @@ cmake ../FreeCAD \
 cd && cd fc-build
 make -j$(nproc)
 
-# Install FreeCAD
+# Install
 make install
 ln -sf /opt/FreeCAD/bin/FreeCAD /usr/bin/freecad-git
 
