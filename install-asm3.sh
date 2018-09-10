@@ -3,9 +3,7 @@ set -eu -o pipefail
 safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
 # end of bash boilerplate
 
-
 safe_source $_sdir/config.sh
-
 asm3=$FREECAD/Ext/freecad/asm3
 
 echo "Clone (or update) Assembly3 Workbench"
@@ -22,3 +20,4 @@ make _slvs
 cp $asm3/slvs/build/src/swig/python/{slvs.py,_slvs.so} $asm3/py_slvs
 touch $asm3/py_slvs/__init__.py
 
+echo "All done."
