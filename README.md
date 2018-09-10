@@ -4,17 +4,13 @@ To be able to use Assembly3 workbench, it's necessary to build LinkStage3 branch
 
 These scripts automates the building process, installs the binaries to `/opt/FreeCAD`. 
 
-# Status 
-
-Works for me, but needs some improvements
-
 # Usage 
 
-Main intention of these scripts is to run them in a clean virtual machine, where Debian 9 or upwards is preferred. 
+Main intention of these scripts is to run them in a clean virtual machine.
 
 ### 1. Setup a clean Debian installation 
 
-Setup a clean installation by using VirtualBox (this is preferred for the first time) or LXC (for advanced/daily usage)
+Setup a clean installation (Debian Stretch or upwards is suggested) by using VirtualBox (easier to setup) or LXC (for advanced/daily usage in terms of performance)
 
 ### 2. Download the builder scripts
 
@@ -37,25 +33,29 @@ git clone https://github.com/ceremcem/build-freecad-asm3
 
 ### 4. Run the FreeCAD
 
-If you used VirtualBox, you can run FreeCAD directly within the VirtualBox: 
+If you used VirtualBox (or a real machine), you can run FreeCAD directly within the machine: 
 
 ```
 freecad-git
 ```
 
-If you use LXC (or you may use this technique with any kind of remote machine):
+Otherwise, run `freecad-git` over SSH by `X Forwarding`:
 
 ```
-ssh -XC freecad-machine freecad-git
+ssh -XC ip-or-name-of-freecad-machine freecad-git
 ```
 
 # Tips 
 
 Preferably add `.bashrc` the following line: 
  
-     alias freecad-asm3-remote='ssh -XC ip-or-name-of-freecad-machine freecad-git'
+  ```bash
+  alias freecad-asm3-remote='ssh -XC ip-or-name-of-freecad-machine freecad-git'
+  ```
  
 and then run FreeCAD-Asm3 by simply issuing: 
  
-     local$ freecad-asm3-remote 
+   ```console
+   local$ freecad-asm3-remote 
+   ```
  
