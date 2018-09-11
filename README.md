@@ -49,7 +49,7 @@ ssh -XC ip-or-name-of-freecad-machine freecad-git
 
 # Tips 
 
-## Add `freecad-asm3-remote` into `.bashrc`
+### Add `freecad-asm3-remote` into `.bashrc`
 
 Preferably add `.bashrc` the following line: 
  
@@ -63,6 +63,8 @@ and then run FreeCAD-Asm3 by simply issuing:
    local$ freecad-asm3-remote 
    ```
    
-## Create LXC Containers easily 
+# See Also 
+
+### Create LXC Containers easily 
  
 If you use BTRFS file system, you can take advantage of [LXC To The Future](https://github.com/aktos-io/lxc-to-the-future) while creating LXC Containers.
