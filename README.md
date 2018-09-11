@@ -10,7 +10,9 @@ Main intention of these scripts is to run them in a clean virtual machine.
 
 ### 1. Setup a clean Debian installation 
 
-Setup a clean installation (Debian Stretch or upwards is suggested) by using VirtualBox (easier to setup) or LXC (for advanced/daily usage in terms of performance)
+Setup a clean installation (Debian Stretch or upwards is suggested) by using 
+* VirtualBox (or similar) (easier to setup) 
+* LXC (for advanced/daily usage in terms of performance)
 
 ### 2. Download the builder scripts
 
@@ -47,6 +49,8 @@ ssh -XC ip-or-name-of-freecad-machine freecad-git
 
 # Tips 
 
+## Add `freecad-asm3-remote` into `.bashrc`
+
 Preferably add `.bashrc` the following line: 
  
   ```bash
@@ -58,4 +62,7 @@ and then run FreeCAD-Asm3 by simply issuing:
    ```console
    local$ freecad-asm3-remote 
    ```
+   
+## Create LXC Containers easily 
  
+If you use BTRFS file system, you can take advantage of [LXC To The Future](https://github.com/aktos-io/lxc-to-the-future) while creating LXC Containers.
