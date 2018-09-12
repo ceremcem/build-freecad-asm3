@@ -63,6 +63,15 @@ and then run FreeCAD-Asm3 by simply issuing:
    local$ freecad-asm3-remote 
    ```
    
+### Set the appereance 
+
+In order to make FreeCAD [look well over ssh](https://user-images.githubusercontent.com/6639874/45443660-05b3fc80-b6ce-11e8-91a9-002423f589ad.png), you should do:
+
+```
+sudo apt-get install qt4-qtconfig kde-style-oxygen
+qtconfig
+```
+
 # See Also 
 
 ### Create LXC Containers easily 
