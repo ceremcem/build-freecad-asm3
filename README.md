@@ -14,6 +14,8 @@ Setup a clean installation (Debian Stretch or upwards is suggested) by using
 * VirtualBox (or similar) (easier to setup) 
 * LXC (for advanced/daily usage in terms of performance)
 
+> **Tip**: You can start with Virtualbox (or like) for an easy startup and when everything works okay for you, you may [convert your VBox to LXC any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
+
 ### 2. Download the builder scripts
 
 ```
