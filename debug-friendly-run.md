@@ -12,14 +12,14 @@ alias bt='echo 0 | gdb -batch-silent -ex "run" -ex "set logging overwrite on" -e
 
 2. Run FreeCAD:
 
-    bt freecad-git
+       bt freecad-git
 
-3. Debug output will be at `~/gdb.bt`
+3. After crash, debug output will be at `~/gdb.bt`
 
 # Tips 
 
 * Preferably use [`create-gist.sh`](https://github.com/ceremcem/create-gist) for easy uploading the dump files:
 
-    create-gist.sh ~/gdb.bt yourusername
+      create-gist.sh ~/gdb.bt yourusername
 
 
