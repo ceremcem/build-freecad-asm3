@@ -10,7 +10,11 @@ Main intention of these scripts is to run them in a clean virtual machine.
 
 ### 1. Setup a clean Debian installation 
 
-Setup a clean installation (Debian Stretch or upwards is suggested) by using VirtualBox (easier to setup) or LXC (for advanced/daily usage in terms of performance)
+Setup a clean installation (Debian Stretch or upwards is suggested) by using 
+* VirtualBox (or similar) (easier to setup) 
+* LXC (for advanced/daily usage in terms of performance)
+
+> **Tip**: You can start with Virtualbox (or like) for an easy startup and when everything works okay for you, you may [convert your VBox to LXC any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
 
 ### 2. Download the builder scripts
 
@@ -31,7 +35,7 @@ git clone https://github.com/ceremcem/build-freecad-asm3
 >       ./build-freecad-asm3/install-fc.sh
 >
 
-### 4. Run the FreeCAD
+### 4. Run FreeCAD-Asm3
 
 If you used VirtualBox (or a real machine), you can run FreeCAD directly within the machine: 
 
@@ -51,6 +55,8 @@ If you need to provide more detailed backtrace, see [debug-friendly-run.md](./de
 
 # Tips 
 
+### Add `freecad-asm3-remote` into `.bashrc`
+
 Preferably add `.bashrc` the following line: 
  
   ```bash
@@ -62,4 +68,18 @@ and then run FreeCAD-Asm3 by simply issuing:
    ```console
    local$ freecad-asm3-remote 
    ```
+   
+### Set the appearance 
+
+Running a Qt application over ssh looks ugly. In order to make FreeCAD [look well over ssh](https://user-images.githubusercontent.com/6639874/45443660-05b3fc80-b6ce-11e8-91a9-002423f589ad.png), you should do:
+
+```
+sudo apt-get install qt4-qtconfig kde-style-oxygen
+qtconfig
+```
+
+# See Also 
+
+### Create LXC Containers easily 
  
+If you use BTRFS file system, you can take advantage of [LXC To The Future](https://github.com/aktos-io/lxc-to-the-future) while creating LXC Containers.
