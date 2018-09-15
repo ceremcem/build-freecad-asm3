@@ -45,6 +45,10 @@ Otherwise, run `freecad-git` over SSH by `X Forwarding`:
 ssh -XC ip-or-name-of-freecad-machine freecad-git
 ```
 
+### Debug Friendly Run 
+
+If you need to provide more detailed backtrace, see [debug-friendly-run.md](./debug-friendly-run.md).
+
 # Tips 
 
 Preferably add `.bashrc` the following line: 

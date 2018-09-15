@@ -18,9 +18,10 @@ cmake ../FreeCAD \
  	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
 	-DFREECAD_USE_OCC_VARIANT="Official Version" \
-	-DOpenCASCADE_DIR=$FREECAD/lib/cmake/opencascade
-#	-DNETGEN_ROOT=$FREECAD
-#	-DBUILD_FEM_NETGEN=ON
+	-DOpenCASCADE_DIR=$FREECAD/lib/cmake/opencascade \
+	-DCMAKE_BUILD_TYPE=Debug \
+	-DNETGEN_ROOT=$FREECAD \
+	-DBUILD_FEM_NETGEN=ON
 
 cd && cd fc-build
 make -j$(nproc)
