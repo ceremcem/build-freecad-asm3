@@ -10,10 +10,10 @@ Main intention of these scripts is to run them in a clean virtual machine, just 
 
 Using a virtual build/run environment has invaluable advantages for a bleeding edge application:
 
-1. Build process won't be affected by any unintentional system upgrades. You can be perfectly in sync with the developers' environment conditions without affecting rest of your system.
-2. If any code updates break your build process or there is *some* commits that causes frequent crashes, just report the problem and return to previous snapshot in seconds to continue your work. When the problem is fixed, optionally roll forward, do a code update and use the new version. 
-3. In case of an event described in step 2, you did a rollback and you are continuing your work. Then developer responds and wants some more information. Just switch to the crashing version, provide the information, do a rollback, continue your work from where you left. 
-4. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a performance penalty). 
+1. Build process won't be affected by any unintentional system upgrades. You can be perfectly in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
+2. If any code updates break your build process or there are *some* commits that cause frequent crashes, just report the problem and return to a previous snapshot in seconds to continue your work. When the problem is fixed, optionally roll forward (to save build time), do a code update, build and use the new version. 
+3. In case of an event described in step 2, you had done a rollback and you have been continuing your work. Then developer responds and requires some more information. Just switch to the crashing version, provide the information, do a rollback, continue your work from where you left. 
+4. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
 
 # Requirements 
 
