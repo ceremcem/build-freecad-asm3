@@ -28,7 +28,9 @@ Setup a clean installation:
 * either on VirtualBox (or similar) (easier to setup) 
 * or on LXC (for advanced/daily usage in terms of performance)
 
-> **Tip**: You may start with Virtualbox/like for an easy startup and then you may [convert your machine to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
+      sudo lxc-create -n freecad -t debian [-B btrfs] -- -r stretch
+
+> **Tip**: You may [convert your VM to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
 
 ### 2. Download the builder scripts
 
