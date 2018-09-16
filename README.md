@@ -15,16 +15,19 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 3. In case of an event described in step 2, you did a rollback and you are continuing your work. Then developer responds and wants some more information. Just switch to the crashing version, provide the information, do a rollback, continue your work from where you left. 
 4. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a performance penalty). 
 
+# Requirements 
+
+1. Use Debian Stretch or upwards 
 
 # Usage 
 
 ### 1. Setup a clean Debian installation 
 
-Setup a clean installation (Debian Stretch or upwards is suggested) by using 
-* VirtualBox (or similar) (easier to setup) 
-* LXC (for advanced/daily usage in terms of performance)
+Setup a clean installation:
+* either on VirtualBox (or similar) (easier to setup) 
+* or on LXC (for advanced/daily usage in terms of performance)
 
-> **Tip**: You can start with Virtualbox/like for an easy startup and then you may [convert your machine to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
+> **Tip**: You may start with Virtualbox/like for an easy startup and then you may [convert your machine to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). 
 
 ### 2. Download the builder scripts
 
