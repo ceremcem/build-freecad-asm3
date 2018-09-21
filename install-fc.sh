@@ -10,6 +10,8 @@ safe_source $_sdir/config.sh
 cd
 git clone --single-branch -b LinkStage3 https://github.com/realthunder/FreeCAD.git || { cd FreeCAD && git pull; }
 
+[[ DEBUG = true ]] && build_type="Debug" || build_type="Release"
+
 # build
 cd && mkdir -p fc-build && cd fc-build
 cmake ../FreeCAD \
@@ -17,12 +19,12 @@ cmake ../FreeCAD \
 	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
 	-DFREECAD_USE_OCC_VARIANT="Official Version" \
 	-DOpenCASCADE_DIR=$FREECAD/lib/cmake/opencascade \
-	-DCMAKE_BUILD_TYPE=Debug \
+	-DCMAKE_BUILD_TYPE=$build_type \
 	-DNETGEN_ROOT=$FREECAD \
 	-DBUILD_FEM_NETGEN=ON
 
 cd && cd fc-build
-make -j$(nproc)
+make -j${CPU}
 
 # Install
 make install

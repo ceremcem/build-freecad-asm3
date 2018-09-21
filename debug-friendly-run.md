@@ -1,8 +1,8 @@
 # Debug Friendly Run 
 
-In order to get more accurate stack traces, debug build option is enabled by default in `install-fc.sh`. 
+In order to get more accurate stack traces, set `DEBUG=true` in `config.sh` and run FreeCAD under `gdb`. 
 
-Run FreeCAD under `gdb`:
+### Run FreeCAD under `gdb`:
 
 1. Add the following into `.bashrc`
 

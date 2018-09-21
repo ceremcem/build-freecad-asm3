@@ -9,6 +9,7 @@ asm3=$FREECAD/Ext/freecad/asm3
 echo "Clone (or update) Assembly3 Workbench"
 echo "-------------------------------------"
 git clone https://github.com/realthunder/FreeCAD_assembly3 $asm3 || { cd $asm3; git pull; } && cd $asm3
+git checkout $Asm3_Commit
 
 echo "Building SolveSpace"
 echo "-------------------"
