@@ -10,10 +10,21 @@ safe_source $_sdir/config.sh
 cd
 git clone --single-branch -b LinkStage3 https://github.com/realthunder/FreeCAD.git || { cd FreeCAD && git pull; }
 
-[[ DEBUG = true ]] && build_type="Debug" || build_type="Release"
+[[ $DEBUG = true ]] && build_type="Debug" || build_type="Release"
+
+echo
+echo "-------------------------------"
+echo "Building for $build_type target"
+echo "-------------------------------"
+echo
+sleep 3
+
+build_dir="fc-build-${build_type}"
 
 # build
-cd && mkdir -p fc-build && cd fc-build
+cd
+mkdir -p $build_dir && cd $build_dir
+t0=$SECONDS
 cmake ../FreeCAD \
  	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
@@ -23,12 +34,22 @@ cmake ../FreeCAD \
 	-DNETGEN_ROOT=$FREECAD \
 	-DBUILD_FEM_NETGEN=ON
 
-cd && cd fc-build
+t1=$SECONDS
+echo "-----------------------------------------------"
+echo "Configuration done in $((t1 - t0))s"
+echo "-> Compiling"
+echo "-----------------------------------------------"
 make -j${CPU}
 
 # Install
 make install
-ln -sf /opt/FreeCAD/bin/FreeCAD /usr/bin/freecad-git
+ln -sf $FREECAD/bin/FreeCAD /usr/bin/freecad-git
+
+t2=$SECONDS
+echo "-----------------------------------------------"
+echo "FreeCAD is built in $(( (t2 - t1) / 60 ))m"
+echo "-> Installing Asm3"
+echo "-----------------------------------------------"
 
 # Install Assembly3 Workbench
 $_sdir/install-asm3.sh
