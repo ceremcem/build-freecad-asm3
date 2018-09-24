@@ -1,5 +1,7 @@
 #!/bin/bash
 FREECAD=/opt/FreeCAD
-DEBUG=false
-CPU=$(nproc)
+
+DEBUG_CPU=$(nproc) # Full throttle
+RELEASE_CPU=1 # Idle
+
 Asm3_Commit="master"
