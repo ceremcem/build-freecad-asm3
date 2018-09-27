@@ -22,6 +22,8 @@ build(){
 	local CPU=$3
 	local do_install=$4
 
+	[[ $CPU -gt $(nproc) ]] && CPU=$(nproc)
+
 	echo
 	echo "-------------------------------"
 	echolog "Building in $build_dir"
@@ -31,7 +33,7 @@ build(){
 
 	mkdir -p $build_dir && cd $build_dir
 	t0=$SECONDS
-	cmake /root/FreeCAD \
+	cmake ../../FreeCAD \
 	 	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 		-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade \
 		-DFREECAD_USE_OCC_VARIANT="Official Version" \
@@ -63,12 +65,12 @@ build_root="/root/fc-build"
 
 debug_build(){
 	local do_install=$1
-	build "${build_root}-Debug" Debug $DEBUG_CPU $do_install
+	build "${build_root}/Debug" Debug $DEBUG_CPU $do_install
 }
 
 release_build(){
 	local do_install=$1
-	build "${build_root}-Release" Release $RELEASE_CPU $do_install
+	build "${build_root}/Release" Release $RELEASE_CPU $do_install
 }
 
 if [[ $DEBUG_CPU -ge $RELEASE_CPU ]]; then
