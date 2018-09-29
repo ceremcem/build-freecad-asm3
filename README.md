@@ -15,7 +15,7 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 3. In case of an event described in step 2, you had done a rollback and you have been continuing your work. Then developer responds and requires some more information. Just boot the crashing vm, provide the information, close, continue your work from where you left. 
 4. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
 5. Naturally, provides a security layer for malicious or accidental harms that uses potential holes of the software (such as poorly designed workbench)
-6. Makes FreeCAD Portable: On another operating system, just start the container and use FreeCAD as usual. 
+6. Make the application portable: On another operating system, just start the container and use your app as usual. 
 
 # Requirements 
 
