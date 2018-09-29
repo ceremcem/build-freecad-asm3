@@ -34,18 +34,25 @@ Setup a clean installation:
 > **Tip #1**: You may [convert your VM to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). <br />
 > **Tip #2**: See [below](#create-lxc-containers-easily) if you use BTRFS file system for additional tips.
 
-### 2. Download the builder scripts
+### 2. Login to your FreeCAD Machine 
 
-```
-cd /root
-git clone https://github.com/ceremcem/build-freecad-asm3
+```console
+local$ ssh -XC ip-or-name-of-freecad-machine
+FreeCAD_Machine:~$
 ```
 
-### 3. Install or Update FreeCAD-Asm3
+### 3. Download the builder scripts
+
+```console
+FreeCAD_Machine# cd /root
+FreeCAD_Machine# git clone https://github.com/ceremcem/build-freecad-asm3
+```
+
+### 4. Install or Update FreeCAD-Asm3
 
 
 ```console
-# ./build-freecad-asm3/install.sh 
+FreeCAD_Machine:/root# ./build-freecad-asm3/install.sh 
 ```
 
 > In order to build only LinkStage3 branch and update Asm3 WB:
