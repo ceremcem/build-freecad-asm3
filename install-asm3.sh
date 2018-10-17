@@ -16,7 +16,7 @@ echo "-------------------"
 git submodule update --init slvs
 cd $asm3/slvs
 mkdir -p build && cd build
-cmake -DBUILD_PYTHON=1 ..
+cmake -DBUILD_PYTHON=1 -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python2' ..
 make _slvs
 cp $asm3/slvs/build/src/swig/python/{slvs.py,_slvs.so} $asm3/py_slvs
 touch $asm3/py_slvs/__init__.py
