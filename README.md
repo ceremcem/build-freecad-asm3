@@ -24,7 +24,7 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 
 Setup a clean installation:
 * either on VirtualBox (or similar) (easier to setup)
-      * Use debian.iso from https://www.debian.org/
+  * Use debian.iso from https://www.debian.org/
       
 * or on LXC (for advanced/daily usage in terms of performance)
 
