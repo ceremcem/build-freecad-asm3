@@ -17,6 +17,8 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 5. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
 6. A VM provides a natural security layer for malicious or accidental harms that uses potential holes of the software (such as poorly designed workbench)
 7. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
+8. You can host and run multiple versions/builds simultaneously. 
+
 
 # Usage 
 
