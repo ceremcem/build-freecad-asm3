@@ -4,7 +4,7 @@ To be able to use Assembly3 workbench, it's necessary to build LinkStage3 branch
 
 These scripts automates the building process, installs the binaries to `/opt/FreeCAD`. 
 
-# Advantages 
+### Advantages 
 
 Main intention of these scripts is to run them in a clean virtual machine, just like Docker. 
 
@@ -48,7 +48,7 @@ fc:~$
 
 ```console
 fc# cd /root
-fc# git clone https://github.com/ceremcem/build-freecad-asm3
+fc:/root# git clone https://github.com/ceremcem/build-freecad-asm3
 ```
 
 ### 4. Install or Update FreeCAD-Asm3
