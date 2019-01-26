@@ -5,19 +5,19 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 
 safe_source $_sdir/../config.sh
 
-### OCCT 7.1.0p1
+### OCCT 7.3
 #----------------
 MAKEDIR=occt \
 	&& cd \
 	&& mkdir -p $MAKEDIR \
 	&& cd $MAKEDIR
 
-git clone https://github.com/luvres/occt71.git || { cd occt71 && git pull && cd ..; }
+git clone https://github.com/ceremcem/occt73.git || { cd occt73 && git pull && cd ..; }
 mkdir -p build \
 	&& cd build \
   \
 	&& cmake \
-		../occt71 \
+		../occt73 \
 		-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD \
 		-DUSE_VTK:BOOL=OFF \
 		-DUSE_TBB:BOOL=ON \
