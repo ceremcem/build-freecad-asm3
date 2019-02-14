@@ -4,28 +4,30 @@ To be able to use Assembly3 workbench, it's necessary to build LinkStage3 branch
 
 These scripts automates the building process, installs the binaries to `/opt/FreeCAD`. 
 
-# Advantages 
+### Advantages 
 
 Main intention of these scripts is to run them in a clean virtual machine, just like Docker. 
 
 Using a virtual build/run environment has invaluable advantages for a bleeding edge application:
 
-1. Build process won't be affected by any unintentional system upgrades. You can be perfectly in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
-2. If any code updates break your build process or there are *some* commits that cause frequent crashes, just report the problem and return to a previous snapshot in seconds to continue your work. When the problem is fixed, optionally roll forward (to save build time), do a code update, build and use the new version. 
-3. In case of an event described in step 2, you had done a rollback and you have been continuing your work. Then developer responds and requires some more information. Just boot the crashing vm, provide the information, close, continue your work from where you left. 
-4. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
-5. Naturally, provides a security layer for malicious or accidental harms that uses potential holes of the software (such as poorly designed workbench)
+1. Build process won't be affected by any unintentional system upgrades. 
+2. You can be perfectly in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
+3. If any app updates break your build process or there are *some* commits that cause frequent crashes, just report the problem and return to a previous VM snapshot in seconds and continue your work. When the problem is fixed, optionally roll forward (to save build time), do a code update, build and use the new version. 
+4. In case of an event described in step 2, you had done a rollback and you have been continuing your work. Then developer responded and requested some more information. Just boot the crashing vm, provide the information, close the crashing vm, continue your work from where you left. 
+5. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
+6. A VM provides a natural security layer for malicious or accidental harms that uses potential holes of the software (such as poorly designed workbench)
+7. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
+8. You can host and run multiple versions/builds simultaneously. 
 
-# Requirements 
-
-1. Use Debian Stretch or upwards 
 
 # Usage 
 
-### 1. Setup a clean Debian installation 
+### 1. Setup a Debian VM 
 
 Setup a clean installation:
-* either on VirtualBox (or similar) (easier to setup) 
+* either on VirtualBox (or similar) (easier to setup)
+  * Use debian.iso from https://www.debian.org/
+      
 * or on LXC (for advanced/daily usage in terms of performance)
 
       sudo lxc-create -n freecad -t debian -- -r stretch
@@ -33,26 +35,31 @@ Setup a clean installation:
 > **Tip #1**: You may [convert your VM to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). <br />
 > **Tip #2**: See [below](#create-lxc-containers-easily) if you use BTRFS file system for additional tips.
 
-### 2. Download the builder scripts
+### 2. Login to your FreeCAD Machine 
 
-```
-cd /root
-git clone https://github.com/ceremcem/build-freecad-asm3
-```
-
-### 3. Install or Update FreeCAD-Asm3
-
+> Assuming your VM has an IP of `10.0.10.3`
 
 ```console
-# ./build-freecad-asm3/install.sh 
+local$ ssh -XC 10.0.10.3
+fc:~$
 ```
 
-> In order to build only LinkStage3 branch and update Asm3 WB:
-> 
->       ./build-freecad-asm3/install-fc.sh
->
+### 3. Download the builder scripts
 
-### 4. Run FreeCAD-Asm3
+```console
+fc# cd /root
+fc:/root# git clone https://github.com/ceremcem/build-freecad-asm3
+```
+
+### 4. Install or Update FreeCAD-Asm3
+
+```console
+fc:/root# ./build-freecad-asm3/install.sh 
+```
+
+>     ./build-freecad-asm3/install-fc.sh  # to build only LinkStage3 and Asm3
+
+### 5. Run FreeCAD-Asm3
 
 If you used VirtualBox (or a real machine), you can run FreeCAD directly within the machine: 
 
@@ -63,7 +70,7 @@ freecad-git
 Otherwise (or in any case), run `freecad-git` over SSH by `X Forwarding`:
 
 ```
-ssh -XC ip-or-name-of-freecad-machine freecad-git
+ssh -XC 10.0.10.3 freecad-git
 ```
 
 ### Debug Friendly Run 
@@ -77,18 +84,18 @@ If you need to provide more detailed backtrace, see [debug-friendly-run](./debug
 Preferably add `.bashrc` the following line: 
  
   ```bash
-  alias freecad-asm3-remote='ssh -XC ip-or-name-of-freecad-machine freecad-git'
+  alias fc-asm3-remote='ssh -XC 10.0.10.3 freecad-git'
   ```
  
 and then run FreeCAD-Asm3 by simply issuing: 
  
    ```console
-   local$ freecad-asm3-remote 
+   local$ fc-asm3-remote 
    ```
    
 ### Set the appearance 
 
-Running a Qt application over ssh looks ugly. In order to make FreeCAD [look well over ssh](https://user-images.githubusercontent.com/6639874/45443660-05b3fc80-b6ce-11e8-91a9-002423f589ad.png), you should do:
+If visuals look ugly, see [this](https://user-images.githubusercontent.com/6639874/45443660-05b3fc80-b6ce-11e8-91a9-002423f589ad.png):
 
 ```
 sudo apt-get install qt4-qtconfig kde-style-oxygen
