@@ -68,6 +68,9 @@ pack_calculix=" \
 	gfortran \
 	cpio "
 
+pack_fem=" \
+	python-yaml "
+
 solvespace_0="libgtkmm-2.4-dev"
 solvespace_deps="libpng12-0 libjson-c-dev libfreetype6-dev \
 	libfontconfig1-dev libpangomm-1.4-dev \
@@ -81,6 +84,7 @@ apt-get update && apt-get install -y \
 	$pack_netgen \
 	$pack_occt \
 	$pack_calculix \
+	$pack_fem \
 	cmake
 
 apt-get install $solvespace_0
