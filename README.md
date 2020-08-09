@@ -30,7 +30,8 @@ Setup a clean installation:
       
 * or on LXC (for advanced/daily usage in terms of performance)
 
-      sudo lxc-create -n freecad -t debian -- -r stretch
+      sudo lxc-create -n fc -t debian -B dir -- -r buster \
+          --packages "xbase-clients nano git"
 
 > **Tip #1**: You may [convert your VM to LXC at any time](https://github.com/aktos-io/lxc-to-the-future/blob/master/README.md#convert-another-vm-to-lxc-container). <br />
 > **Tip #2**: See [below](#create-lxc-containers-easily) if you use BTRFS file system for additional tips.
