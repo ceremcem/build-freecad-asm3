@@ -4,15 +4,26 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 # end of bash boilerplate
 
 safe_source $_sdir/config.sh
-#asm3=$build_dir/Ext/freecad/asm3
-asm3=$HOME/.FreeCAD/Mod/asm3
+asm3=$(readlink -f $build_dir/Mod/asm3)
+#asm3=$HOME/.FreeCAD/Mod/asm3
 
 echo "Clone (or update) Assembly3 Workbench"
 echo "-------------------------------------"
-git clone https://github.com/realthunder/FreeCAD_assembly3 $asm3 || { cd $asm3; git pull; } && cd $asm3
+
+git_clone_or_update (){
+    local url=$1
+    local dir=$2
+    if [[ -d $dir/.git ]]; then
+	echo "changing to $dir"
+        ( cd $dir; git pull)
+    else
+        git clone $url $dir
+    fi
+}
+
+git_clone_or_update https://github.com/realthunder/FreeCAD_assembly3 $asm3
+cd $asm3
 git checkout $Asm3_Commit
 
-echo "Installing SolveSpace"
-echo "-------------------"
-sudo pip install py-slvs
+$_sdir/install-slvs.sh "$asm3/freecad/asm3"
 echo "All done."
