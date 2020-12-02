@@ -4,8 +4,8 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 # end of bash boilerplate
 
 safe_source $_sdir/config.sh
-#asm3=$build_dir/Ext/freecad/asm3
-asm3=$HOME/.FreeCAD/Mod/asm3
+asm3=$build_dir/Mod/asm3
+#asm3=$HOME/.FreeCAD/Mod/asm3
 
 echo "Clone (or update) Assembly3 Workbench"
 echo "-------------------------------------"
@@ -14,8 +14,8 @@ git_clone_or_update (){
     local url=$1
     local dir=$2
     if [[ -d $dir/.git ]]; then
-        cd $dir
-        git pull
+	echo "changing to $dir"
+        ( cd $dir; git pull)
     else
         git clone $url $dir
     fi
@@ -27,8 +27,9 @@ git checkout $Asm3_Commit
 
 echo "Installing SolveSpace"
 echo "-------------------"
-sudo pip install py-slvs
 
+echo "FIXME! Solvespace is not found"
+exit 1
 #[ -f $asm3/slvs/.git ] && mv $asm3/slvs $asm3/slvs.old-version
 #git_clone_or_update https://github.com/realthunder/solvespace.git $asm3/slvs
 #cd $asm3/slvs
