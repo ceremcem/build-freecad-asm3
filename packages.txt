@@ -49,9 +49,5 @@ qtbase5-dev
 qttools5-dev 
 swig
 
-# Asm3
-python-pip
-python3-pip
-
 # FCCamera Macro
 PySide2.QtXml
