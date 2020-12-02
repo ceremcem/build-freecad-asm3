@@ -2,7 +2,7 @@
 
 To be able to use Assembly3 workbench, it's necessary to build LinkStage3 branch first and then install Assembly3 workbench. 
 
-These scripts automates the building process, installs the binaries to `/opt/FreeCAD`. 
+These scripts automates the building process, creates the FreeCAD binary in `~/fc-build/Release/bin/`. 
 
 ### Advantages 
 
