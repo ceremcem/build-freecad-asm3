@@ -17,16 +17,18 @@ echo "Building in $build_dir"
 echo "-------------------------------"
 echo
 sleep 3
+build_dir=$(readlink -f $build_dir)
 
 mkdir -p $build_dir
 cd $build_dir
 t0=$SECONDS
 
-cmake ../../FreeCAD \
+(cd $build_dir && cmake ../../FreeCAD \
 	-DFREECAD_USE_OCC_VARIANT="Official Version" \
 	-DCMAKE_BUILD_TYPE=$build_type \
 	-DBUILD_QT5=ON \
-	-DPYTHON_EXECUTABLE=/usr/bin/python3 
+	-DPYTHON_EXECUTABLE=/usr/bin/python3 \
+)
 #	-DOpenCASCADE_DIR=$FREECAD/lib/cmake/opencascade \
 #	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade 
 # 	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD 
@@ -43,6 +45,9 @@ t2=$SECONDS
 echo "-----------------------------------------------"
 echo "FreeCAD is compiled in $(( (t2 - t1) / 60 ))m"
 echo "-----------------------------------------------"
+
+mkdir -p $_sdir/latest-build
+cp $build_dir/src/Build/Version.h $_sdir/latest-build/Version.h
 
 # Install Assembly3 Workbench
 $_sdir/install-asm3.sh
