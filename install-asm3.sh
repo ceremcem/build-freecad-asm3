@@ -3,9 +3,10 @@ set -eu -o pipefail
 safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
 # end of bash boilerplate
 
-safe_source $_sdir/config.sh
-asm3=$(readlink -f $build_dir/Mod/asm3)
-#asm3=$HOME/.FreeCAD/Mod/asm3
+Asm3_Commit="master"
+
+[[ -z ${1:-} ]] && { echo "Usage: $(basename $0) path/to/freecad/build-dir"; exit 1; }
+asm3="$(readlink -f $1)/Mod/asm3"
 
 echo "Clone (or update) Assembly3 Workbench"
 echo "-------------------------------------"

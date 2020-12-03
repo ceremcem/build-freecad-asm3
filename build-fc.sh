@@ -50,4 +50,4 @@ mkdir -p $_sdir/latest-build
 cp $build_dir/src/Build/Version.h $_sdir/latest-build/Version.h
 
 # Install Assembly3 Workbench
-$_sdir/install-asm3.sh
+$_sdir/install-asm3.sh $build_dir
