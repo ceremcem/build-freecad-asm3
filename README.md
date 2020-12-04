@@ -23,11 +23,11 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 
 ### 1. Setup a Debian VM 
 
-Setup a clean installation:
-* either on VirtualBox (or similar) (easier to setup)
+Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bionic may also work.):
+* either on VirtualBox (or similar virtualization software)
   * Use debian.iso from https://www.debian.org/
       
-* or on LXC (for advanced/daily usage in terms of performance)
+* or on LXC (more suitable for advanced/daily usage in terms of performance and easiness)
 
         sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
         sudo lxc-start fc
