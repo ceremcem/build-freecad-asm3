@@ -26,7 +26,8 @@ EOL
 	exit 1
 fi
 
-echo "Clone (or update) py_slvs"
+py_slvs_dir="$asm3/py3_slvs"
+echo "Clone (or update) $(basename $py_slvs_dir)"
 echo "-------------------------------------"
 git_clone_or_update https://github.com/realthunder/solvespace.git $asm3/slvs
 cd $asm3/slvs
@@ -34,7 +35,6 @@ git submodule update --init extlib/libdxfrw
 mkdir -p build && cd build
 cmake -DBUILD_PYTHON=1 -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python3' ..
 make _slvs
-py_slvs_dir="$asm3/py3_slvs"
 mkdir -p $py_slvs_dir
 cp $asm3/slvs/build/src/swig/python/{slvs.py,_slvs.so} $py_slvs_dir
 touch $py_slvs_dir/__init__.py
