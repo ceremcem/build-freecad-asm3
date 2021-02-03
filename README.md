@@ -19,7 +19,20 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 7. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
 8. You can host and run multiple versions that refuses to build in the other's dependency environment (or refuses to install the dependencies because it conflicts with the other's dependencies) simultaneously. 
 
-# Usage 
+# Building directly on host
+
+You may also prefer building FreeCAD directly on your machine. To do so: 
+
+```console
+$ git clone https://github.com/ceremcem/build-freecad-asm3
+$ ./build-freecad-asm3/install.sh 
+(after building)
+$ ~/fc-build/Release/bin/FreeCAD
+```
+
+> For Debian users: If you don't want to pollute your package database with the necessary dependencies, you can use [`create-virtual-deps.sh`](https://raw.githubusercontent.com/ceremcem/multistrap-helpers/6651c8d269f2a5751fc47e0da9d8ffbe2f2b72da/install-to-disk/debian-notes/package-control/create-virtual-deps.sh) to create a virtual package that defines the dependencies. You can easily remove the dependencies later on.  
+
+# Building in and using from a container 
 
 ### 1. Setup a Debian LXC container or VM 
 
