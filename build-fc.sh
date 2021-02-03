@@ -9,8 +9,19 @@ safe_source $_sdir/config.sh
 #----------------------------------
 cd $HOME
 branch=LinkStage3
-#git fetch origin LinkDev:LinkDev
-git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git || { cd FreeCAD; git checkout $branch; git pull; }
+remote=origin
+src="$HOME/FreeCAD"
+[[ -d $src ]] || git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git
+cd $src
+git checkout $branch
+git reset --hard $remote/$branch
+git pull
+#git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
+
+for patch in *.patch; do
+    echo "Trying to apply patch: $patch"
+    git apply --stat $patch && git apply --check $patch && git am < $patch
+done
 
 echo "-------------------------------"
 echo "Building in $build_dir"
