@@ -6,28 +6,28 @@ These scripts automates the building process, creates the FreeCAD binary in `~/f
 
 ### Advantages 
 
-Main intention of these scripts is to run them in a clean virtual machine, just like Docker. 
+Main intention of these scripts is to run them in a clean LXC container (or Virtual Machine), just like Docker. 
 
 Using a virtual build/run environment has invaluable advantages for a bleeding edge application:
 
-1. Build process won't be affected by any unintentional system upgrades. 
-2. You can be perfectly in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
-3. If any app updates break your build process or there are *some* commits that cause frequent crashes, just report the problem and return to a previous VM snapshot in seconds and continue your work. When the problem is fixed, optionally roll forward (to save build time), do a code update, build and use the new version. 
-4. In case of an event described in step 2, you had done a rollback and you have been continuing your work. Then developer responded and requested some more information. Just boot the crashing vm, provide the information, close the crashing vm, continue your work from where you left. 
+1. Build process won't be affected by any unintentional system/dependency upgrades. 
+2. You can perfectly be in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
+3. If any app updates break your build process or there are *some* commits that cause frequent crashes, just report the problem, return to a previous VM snapshot in seconds and continue your work. When the problem is fixed, optionally restore the crashing VM/container (to save build time), do a code update, build and use/test the new version. 
+4. In case of an event described in the previous step, you had rolled back and have been continuing your work. Then the developer responded and requested some more information. Just boot the crashing VM/container, provide the information, continue your work from where you left. 
 5. Maintain a complex build process in one place and use it on any distro (even on non-Linux machines with a moderate performance penalty). 
-6. A VM provides a natural security layer for malicious or accidental harms that uses potential holes of the software (such as a poorly designed workbench or macro).
+6. A VM/container provides a natural security layer for malicious or accidental harms that uses potential holes of the software (such as a poorly designed workbench or macro).
 7. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
-8. You can host and run multiple versions/builds simultaneously. 
+8. You can host and run multiple versions that refuses to build in the other's dependency environment (or refuses to install the dependencies because it conflicts with the other's dependencies) simultaneously. 
 
 # Usage 
 
-### 1. Setup a Debian VM 
+### 1. Setup a Debian LXC container or VM 
 
-Setup a clean installation:
-* either on VirtualBox (or similar) (easier to setup)
+Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bionic may also work.):
+* either on VirtualBox (or similar virtualization software)
   * Use debian.iso from https://www.debian.org/
       
-* or on LXC (for advanced/daily usage in terms of performance)
+* or on LXC (more suitable for advanced/daily usage in terms of performance and easiness)
 
         sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
         sudo lxc-start fc
@@ -39,7 +39,7 @@ Setup a clean installation:
 
 ### 2. Login to your FreeCAD Machine 
 
-> Assuming your VM has an IP of `10.0.10.3`
+> Assuming your VM/container has an IP of `10.0.10.3`
 
 ```console
 local$ ssh -XC freecad@10.0.10.3
