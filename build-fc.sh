@@ -22,6 +22,7 @@ show_help(){
 			 Useful for preparation to offline compilation.
         --only-compile : Do not fetch from git remote, only compile.
                          Useful for local hacks.
+        --enable-fem   : Build dependencies required for FEM Workbench.
 HELP
 }
 
@@ -43,6 +44,7 @@ help_die(){
 # Initialize parameters
 only_compile=false
 only_fetch=false
+enable_fem=false
 # ---------------------------
 args_backup=("$@")
 args=()
@@ -60,6 +62,9 @@ while [ $# -gt 0 ]; do
             ;;
         --only-fetch)
             only_fetch=true
+            ;;
+    	--enable-fem)
+	        enable_fem=true
             ;;
         # --------------------------------------------------------
         -*) # Handle unrecognized options
@@ -113,11 +118,16 @@ mkdir -p $build_dir
 cd $build_dir
 t0=$SECONDS
 
+# Additional options
+opts=
+#$enable_fem && opts="$opts -DBUILD_FEM_NETGEN=1"
+
 (cd $build_dir && cmake ../../FreeCAD \
 	-DFREECAD_USE_OCC_VARIANT="Official Version" \
 	-DCMAKE_BUILD_TYPE=$build_type \
 	-DBUILD_QT5=ON \
 	-DPYTHON_EXECUTABLE=/usr/bin/python3 \
+    $opts \
 )
 
 t1=$SECONDS

@@ -1,0 +1,3 @@
+[submodule "debian-notes"]
+	path = debian-notes
+	url = https://github.com/ceremcem/debian-notes

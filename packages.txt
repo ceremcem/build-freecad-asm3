@@ -50,4 +50,5 @@ qttools5-dev
 swig
 
 # FCCamera Macro
-PySide2.QtXml
+#PySide2.QtXml
+python3-pyside2.qtxml
