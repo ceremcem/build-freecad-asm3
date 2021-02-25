@@ -1,19 +1,8 @@
 #!/bin/bash
 set -eu -o pipefail
 safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
-# end of bash boilerplate
 
-git_clone_or_update (){
-    local url=$1
-    local dir=$2
-    if [[ -d $dir/.git ]]; then
-	echo "changing to $dir"
-        ( cd $dir; git pull)
-    else
-        git clone $url $dir
-    fi
-}
-
+# Usage
 asm3=${1:-}
 if [[ ! -d $asm3 ]]; then
     cat << EOL
@@ -25,6 +14,17 @@ if [[ ! -d $asm3 ]]; then
 EOL
 	exit 1
 fi
+
+git_clone_or_update (){
+    local url=$1
+    local dir=$2
+    if [[ -d $dir/.git ]]; then
+	echo "+ cd $dir"
+        ( cd $dir; git pull)
+    else
+        git clone $url $dir
+    fi
+}
 
 py_slvs_dir="$asm3/py3_slvs"
 echo "Clone (or update) $(basename $py_slvs_dir)"

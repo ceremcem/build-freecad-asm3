@@ -25,7 +25,7 @@ You may also prefer building FreeCAD directly on your machine. To do so:
 
 ```console
 $ git clone https://github.com/ceremcem/build-freecad-asm3
-$ ./build-freecad-asm3/install.sh 
+$ ./build-freecad-asm3/build.sh 
 (after building)
 $ ~/fc-build/Release/bin/FreeCAD
 ```
@@ -68,7 +68,7 @@ freecad@fc:~$ git clone https://github.com/ceremcem/build-freecad-asm3
 ### 4. Install or Update FreeCAD-Asm3
 
 ```console
-freecad@fc:~$ ./build-freecad-asm3/install.sh 
+freecad@fc:~$ ./build-freecad-asm3/build.sh 
 ```
 
 >     ./build-freecad-asm3/build-fc.sh  # to build only LinkStage3 and Asm3

@@ -3,31 +3,110 @@ set -eu -o pipefail
 safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"; _sdir=$(dirname "$(readlink -f "$0")"); }; safe_source
 # end of bash boilerplate
 
-safe_source $_sdir/config.sh
+## References:
+# https://gist.github.com/berndhahnebach/38d5bfe73134928c0a1ad001a94df05f
+# https://github.com/berndhahnebach/Netgen
+# https://sourceforge.net/p/netgen-mesher/wiki/Home/
+# https://aur.archlinux.org/packages
+# http://www.boost.org/doc/libs/1_64_0/more/getting_started/unix-variants.html
 
-### LinkStage3 latest Github commit
-#----------------------------------
-cd $HOME
-branch=LinkStage3
-remote=origin
-src="$HOME/FreeCAD"
-[[ -d $src ]] || git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git
-cd $src
-git checkout $branch
-git reset --hard $remote/$branch
-git pull
-#git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
+show_help(){
+    cat <<HELP
+    $(basename $0) [options]
 
-for patch in *.patch; do
-    echo "Trying to apply patch: $patch"
-    git apply --stat $patch && git apply --check $patch && git am < $patch
-done
+    Fetches changes from the remote and then compiles it accordingly.
+    Uses config.sh/\$src as FreeCAD git source directory.
+
+    Options:
+        --only-fetch   : Only fetch from remote, do not compile.
+			 Useful for preparation to offline compilation.
+        --only-compile : Do not fetch from git remote, only compile.
+                         Useful for local hacks.
+HELP
+}
+
+die(){
+    >&2 echo
+    >&2 echo "$@"
+    exit 1
+}
+
+help_die(){
+    >&2 echo
+    >&2 echo "$@"
+    show_help
+    exit 1
+}
+
+# Parse command line arguments
+# ---------------------------
+# Initialize parameters
+only_compile=false
+only_fetch=false
+# ---------------------------
+args_backup=("$@")
+args=()
+_count=1
+while [ $# -gt 0 ]; do
+    key="${1:-}"
+    case $key in
+        -h|-\?|--help|'')
+            show_help    # Display a usage synopsis.
+            exit
+            ;;
+        # --------------------------------------------------------
+        --only-compile)
+            only_compile=true
+            ;;
+        --only-fetch)
+            only_fetch=true
+            ;;
+        # --------------------------------------------------------
+        -*) # Handle unrecognized options
+            help_die "Unknown option: $1"
+            ;;
+        *)  # Generate the new positional arguments: $arg1, $arg2, ... and ${args[@]}
+            if [[ ! -z ${1:-} ]]; then
+                declare arg$((_count++))="$1"
+                args+=("$1")
+            fi
+            ;;
+    esac
+    [[ -z ${1:-} ]] && break || shift
+done; set -- "${args_backup[@]-}"
+# Use $arg1 in place of $1, $arg2 in place of $2 and so on, 
+# "$@" is in the original state,
+# use ${args[@]} for new positional arguments
+
+source $_sdir/config.sh
+
+if ! $only_compile; then
+    ### LinkStage3 latest Github commit
+    #----------------------------------
+    branch=LinkStage3
+    remote=origin
+    cd "$(dirname "$src")"
+    [[ -d $src ]] || git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git
+    cd $src
+    git checkout $branch
+    git reset --hard $remote/$branch
+    git pull
+    #git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
+    $only_fetch && exit 0
+fi
+
+# Apply any available patches
+if ls *.patch &> /dev/null; then
+    for patch in *.patch; do
+        echo "Trying to apply patch: $patch"
+        git apply --stat $patch && git apply --check $patch && git am < $patch
+    done
+fi
 
 echo "-------------------------------"
 echo "Building in $build_dir"
 echo "-------------------------------"
 echo
-sleep 3
 build_dir=$(readlink -f $build_dir)
 
 mkdir -p $build_dir
@@ -40,11 +119,6 @@ t0=$SECONDS
 	-DBUILD_QT5=ON \
 	-DPYTHON_EXECUTABLE=/usr/bin/python3 \
 )
-#	-DOpenCASCADE_DIR=$FREECAD/lib/cmake/opencascade \
-#	-DOCC_INCLUDE_DIR=$FREECAD/include/opencascade 
-# 	-DCMAKE_INSTALL_PREFIX:PATH=$FREECAD 
-#	-DNETGEN_ROOT=$FREECAD \
-#	-DBUILD_FEM_NETGEN=ON
 
 t1=$SECONDS
 echo "-----------------------------------------------"
