@@ -33,7 +33,7 @@ git_clone_or_update https://github.com/realthunder/solvespace.git $asm3/slvs
 cd $asm3/slvs
 git submodule update --init extlib/libdxfrw
 mkdir -p build && cd build
-cmake -DBUILD_PYTHON=1 -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python3' ..
+cmake -DBUILD_PYTHON=1 -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python3' -Wno-dev ..
 make _slvs
 mkdir -p $py_slvs_dir
 cp $asm3/slvs/build/src/swig/python/{slvs.py,_slvs.so} $py_slvs_dir
