@@ -30,7 +30,7 @@ $ ./build-freecad-asm3/build.sh
 $ ~/fc-build/Release/bin/FreeCAD
 ```
 
-> For Debian users: If you don't want to pollute your package database with the necessary dependencies, you can use [`create-virtual-deps.sh`](https://raw.githubusercontent.com/ceremcem/multistrap-helpers/6651c8d269f2a5751fc47e0da9d8ffbe2f2b72da/install-to-disk/debian-notes/package-control/create-virtual-deps.sh) to create a virtual package that defines the dependencies. You can easily remove the dependencies later on.  
+> For Debian users: If you don't want to pollute your package database with the necessary dependencies, you can use [`create-virtual-deps.sh`](https://github.com/ceremcem/debian-notes/blob/9bc61a3c9f65c5c27d7ab8d160e3d596ed4544e3/package-control/create-virtual-deps.sh) to create a virtual package that defines the dependencies. You can easily remove the dependencies later on.  
 
 # Building in and using from a container 
 
