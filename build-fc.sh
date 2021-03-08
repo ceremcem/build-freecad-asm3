@@ -107,7 +107,7 @@ echo "-------------------------------"
 echo "Building in $build_dir"
 echo "-------------------------------"
 echo
-build_dir=$(readlink -f $build_dir)
+build_dir=$(readlink -m $build_dir)
 
 mkdir -p $build_dir
 cd $build_dir
