@@ -42,6 +42,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
       
 * or on LXC (more suitable for advanced/daily usage in terms of performance and easiness)
 
+	# if necessary: sudo apt-get install debian-keyring debian-archive-keyring
         sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
         sudo lxc-start fc
 
