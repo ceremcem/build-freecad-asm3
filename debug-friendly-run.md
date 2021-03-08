@@ -1,8 +1,12 @@
 # Debug Friendly Run 
 
-In order to get more accurate stack traces, set `DEBUG=true` in `config.sh` and run FreeCAD under `gdb`. 
+In order to get more accurate stack traces, set 
 
-### Run FreeCAD under `gdb`:
+```
+build_type="Release"
+```
+
+in `config.sh` and run FreeCAD under `gdb`:
 
 1. Add the following into `.bashrc` [[1]](https://blog.cryptomilk.org/2010/12/23/gdb-backtrace-to-file/):
 
@@ -12,14 +16,13 @@ In order to get more accurate stack traces, set `DEBUG=true` in `config.sh` and 
 
 2. Run FreeCAD:
 
-       bt freecad-git
+       bt ~/fc-build/Release/bin/FreeCAD
 
 3. After crash, debug output will be at `~/gdb.bt`
 
 # Tips 
 
-* Preferably use [`create-gist.sh`](https://github.com/ceremcem/create-gist) for easy uploading the dump files:
+* You can use [`create-gist.sh`](https://github.com/ceremcem/create-gist) for uploading the dump files to Gist:
 
-      create-gist.sh ~/gdb.bt yourusername
-
+      create-gist.sh ~/gdb.bt
 
