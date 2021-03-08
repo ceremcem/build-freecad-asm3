@@ -4,7 +4,7 @@ safe_source () { [[ ! -z ${1:-} ]] && source $1; _dir="$(cd "$(dirname "${BASH_S
 # end of bash boilerplate
 
 # install required dependencies
-cat packages.txt \
+cat $_sdir/packages.txt \
     | grep -v "^#" \
     | sudo xargs apt-get install -y
 
