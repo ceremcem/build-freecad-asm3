@@ -140,7 +140,6 @@ echo "-----------------------------------------------"
 echo "FreeCAD is compiled in $(( (t2 - t1) / 60 ))m"
 echo "-----------------------------------------------"
 
-mkdir -p $_sdir/latest-build
 cp $build_dir/src/Build/Version.h $_sdir/latest-build-Version.h
 
 # Install Assembly3 Workbench
