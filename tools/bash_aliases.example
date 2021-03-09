@@ -1,0 +1,11 @@
+## FreeCAD-Asm3
+fc_box="fc-asm34"
+alias fc-asm3-remote='ssh $fc_box -t bash -ci freecad'
+alias fc-asm3-backup='/var/lib/lxc/fc4/make-backup.sh'
+alias fc-asm3-update-with-backup='/var/lib/lxc/fc4/make-backup.sh; ssh $fc_box ./build-freecad-asm3/build-fc.sh'
+alias fc-asm3-update-without-backup='ssh $fc_box ./build-freecad-asm3/build-fc.sh'
+alias fc-asm3-start='sudo lxc-start fc4'
+alias fc-asm3-stop='sudo lxc-stop fc4'
+alias fc-asm3-ssh='ssh $fc_box'
+alias fc-asm3-cd="cd /var/lib/lxc/fc4"
+
