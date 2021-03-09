@@ -83,7 +83,10 @@ done; set -- "${args_backup[@]-}"
 # "$@" is in the original state,
 # use ${args[@]} for new positional arguments
 
-source $_sdir/config.sh
+cd $_sdir
+. config.sh
+build_dir=$(readlink -m $build_dir)
+cd $OLDPWD
 
 if ! $only_compile; then
     ### LinkStage3 latest Github commit
@@ -112,7 +115,6 @@ echo "-------------------------------"
 echo "Building in $build_dir"
 echo "-------------------------------"
 echo
-build_dir=$(readlink -m $build_dir)
 
 mkdir -p $build_dir
 cd $build_dir
