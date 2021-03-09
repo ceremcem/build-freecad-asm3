@@ -1,0 +1,1 @@
+$FREECAD is now $build_dir
