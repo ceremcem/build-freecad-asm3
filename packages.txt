@@ -51,3 +51,9 @@ swig
 
 # FCCamera Macro
 PySide2.QtXml
+
+# FEM
+netgen
+netgen-headers
+libmetis-dev
+calculix-ccx
