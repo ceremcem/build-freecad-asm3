@@ -101,6 +101,8 @@ if ! $only_compile; then
     git pull
     #git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
     $only_fetch && exit 0
+else
+    cd $src
 fi
 
 # Apply any available patches
