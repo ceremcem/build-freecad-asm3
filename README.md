@@ -56,7 +56,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
 > Assuming your VM/container has an IP of `10.0.10.3`
 
 ```console
-local$ ssh -XC freecad@10.0.10.3
+local$ ssh -X freecad@10.0.10.3
 freecad@fc:~$ 
 ```
 
@@ -79,7 +79,7 @@ freecad@fc:~$ ./build-freecad-asm3/build.sh
 Run `freecad-git` over SSH by `X Forwarding`:
 
 ```
-ssh -XC freecad@10.0.10.3 fc-build/Release/bin/FreeCAD
+ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD
 ```
 
 ### Debug Friendly Run 
@@ -93,7 +93,7 @@ If you need to provide more detailed backtrace, see [debug-friendly-run](./debug
 Preferably add `.bashrc` the following line: 
  
   ```bash
-  alias fc-asm3-remote='ssh -XC freecad@10.0.10.3 fc-build/Release/bin/FreeCAD'
+  alias fc-asm3-remote='ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD'
   ```
  
 and then run FreeCAD-Asm3 by simply issuing: 
