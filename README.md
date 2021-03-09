@@ -48,7 +48,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
 
         # add user "freecad" if necessary
         sudo lxc-attach fc
-        useradd freecad
+        adduser freecad
         usermod -a -G sudo freecad
 
 ### 2. Login to your FreeCAD Machine 
