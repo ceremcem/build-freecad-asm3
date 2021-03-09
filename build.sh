@@ -9,4 +9,4 @@ cat $_sdir/packages.txt \
     | sudo xargs apt-get install -y
 
 # Build FreeCAD Assembly3
-$_sdir/build-fc.sh
+$_sdir/build-fc.sh $@
