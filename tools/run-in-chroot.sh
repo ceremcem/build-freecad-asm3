@@ -1,18 +1,24 @@
 #!/bin/bash
+_sdir=$(dirname "$(readlink -f "$0")")
 set -u
 
-rootfs="/var/lib/lxc/fc4/rootfs" # CHANGE_HERE
-xhost +local:
-
-[[ -z $rootfs ]] && { echo "\$rootfs should not be empty."; exit 1; }
+# run this script as root
 [[ $(whoami) = "root" ]] || { sudo "$0" "$@"; exit 0; }
 
-ext_cmd='su aea; cd;'
+xhost +local:
+
+config=$1
+source $config
+shift
+
+# parameter checking
+[[ -z $rootfs ]] && { echo "\$rootfs should not be empty."; exit 1; }
+
 cmd=
-if [[ -n ${1:-} ]]; then
+if [[ -n ${script:-} ]]; then
     tmp_file=/tmp/cmd.sh
     cmd="--rcfile $tmp_file"
-    echo $ext_cmd > $rootfs/$tmp_file
+    echo "$script" > $rootfs/$tmp_file
     echo "rm $tmp_file" >> $rootfs/$tmp_file
     chmod +x $rootfs/$tmp_file
 fi
@@ -34,11 +40,19 @@ mount --bind /dev $rootfs/dev
 mount --bind /dev/pts $rootfs/dev/pts
 mount --bind /run $rootfs/run
 
-mount --bind /home/ceremcem/tmp $rootfs/home/aea/tmp # CHANGE_HERE
+if [[ -n $mounts ]]; then
+    while read -r src tgt; do
+        mount --bind $src $rootfs/$tgt
+    done <<< $mounts
+fi
 
 chroot $rootfs /bin/bash $cmd
 
-umount $rootfs/home/aea/tmp # CHANGE_HERE
+if [[ -n $mounts ]]; then
+    while read -r src tgt; do
+        umount $rootfs/$tgt
+    done <<< $mounts
+fi
 
 umount $rootfs/run
 umount $rootfs/dev/pts
