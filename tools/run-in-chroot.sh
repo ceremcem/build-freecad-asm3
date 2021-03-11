@@ -115,7 +115,6 @@ if [[ ${args[@]} || -n $user ]]; then
     tmp_file=/tmp/cmd.sh
     cmd="--rcfile $tmp_file"
     echo '#/bin/bash' > $rootfs/$tmp_file
-    echo 'set -m' >> $rootfs/$tmp_file
     echo "cd" >> $rootfs/$tmp_file
     commands=$(printf "%s " "${args[@]}")
     echo $commands >> $rootfs/$tmp_file
