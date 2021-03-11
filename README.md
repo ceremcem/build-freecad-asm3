@@ -30,18 +30,19 @@ Like AppImage, "Setup once, run everywhere".
 
 ### 1. Setup a Debian LXC container 
 
+> **TIP**: You can completely skip the `ssh -X` usage and just use `run-in-chroot.sh -n fc` to both perform the below steps and run the compiled application directly on your host. You will need to stop the LXC container first. 
+
 Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bionic may also work.):
 
     sudo apt-get install debian-keyring debian-archive-keyring
     sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
-    sudo lxc-start fc
+    sudo lxc-start -n fc
 
     # add user "freecad" if necessary
-    sudo lxc-attach fc
+    sudo lxc-attach -n fc
     adduser freecad
     usermod -a -G sudo freecad
-
-See also [lxc-to-the-future/network-configuration](https://github.com/aktos-io/lxc-to-the-future/blob/master/network-configuration.md) for network configuration. "NAT Configuration" is recommended.
+    su freecad
 
 For external mounts, use `lxc.mount.entry` within the `/var/lib/lxc/fc/config`: 
 
@@ -51,14 +52,15 @@ lxc.mount.entry = /path/to/folder home/freecad/folder none bind 0 0
 
 ### 2. Login to your FreeCAD Machine 
 
-> Assuming your container has an IP of `10.0.10.3`
+> Skip this step and only issue `./run-in-chroot.sh -n fc -u freecad` if you prefer "chroot approach". 
+
+> Assuming your container has an IP of `10.0.10.3`.
+> See also [lxc network configuration](https://github.com/aktos-io/lxc-to-the-future/blob/master/network-configuration.md) section. "NAT Configuration" is recommended.
 
 ```console
 local$ ssh -X freecad@10.0.10.3
 freecad@fc:~$ 
 ```
-
-> **TIP**: You can also completely skip the `ssh` usage and just use `run-in-chroot.sh -n fc` to both perform the below steps and run the compiled application on your host.
 
 ### 3. Download the builder scripts
 
@@ -66,13 +68,13 @@ freecad@fc:~$
 freecad@fc:~$ git clone https://github.com/ceremcem/build-freecad-asm3
 ```
 
-### 4. Install or Update FreeCAD-Asm3
+### 4. Create or Update FreeCAD and Asm3 WB
 
 ```console
 freecad@fc:~$ ./build-freecad-asm3/build.sh 
 ```
 
->     ./build-freecad-asm3/build-fc.sh  # to build only LinkStage3 and Asm3
+> To build only LinkStage3 and Asm3: `./build-freecad-asm3/build-fc.sh  # no root privileges required`
 
 ### 5. Run FreeCAD-Asm3
 
@@ -82,7 +84,7 @@ Run `FreeCAD` over SSH by `X Forwarding`:
 ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD
 ```
 
-You may encounter performance issues with complex models, probably due to `ssh -X`. Running the application inside the `chroot` instead of LXC provides a native-like performance, just like an AppImage: 
+You may encounter performance issues with complex models, probably due to encryption overhead of `ssh -X`. Running the application inside the `chroot` environment provides a native-like performance, just like an AppImage: 
 
 ```bash
 local$ ./tools/run-in-chroot.sh --name fc --user freecad 'fc-build/Release/bin/FreeCAD'
@@ -96,5 +98,7 @@ If you need to provide more detailed backtrace, see [debug-friendly-run](./debug
 # Tools 
 
 See also [./tools](./tools)
+
+Recommended: https://github.com/rfjakob/earlyoom
 
    
