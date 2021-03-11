@@ -138,11 +138,12 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 RESOLV
 
+mounted=()
 cleanup(){
     # unmount in reverse sequence
-    for (( idx=${#mounts[@]}-1 ; idx>=0 ; idx-- )) ; do
+    for (( idx=${#mounted[@]}-1 ; idx>=0 ; idx-- )) ; do
         for i in `seq 10`; do
-            m=$(echo "${mounts[idx]}" | awk '{print $2}')
+            m="${mounted[idx]}"
             if ! mountpoint "$m" > /dev/null; then 
                 $verbose && echo "Skipping unmounting $m (not mounted)"
                 break
@@ -171,7 +172,7 @@ for m in "${mounts[@]}"; do
         $verbose && echo "Skipping (already mounted): $target"
         continue 
     fi
-    mount --bind $m
+    mount --bind $m && mounted+=("$target")
 done
 
 chroot $rootfs /usr/bin/sudo -u $user /bin/bash $cmd
