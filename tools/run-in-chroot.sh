@@ -145,6 +145,10 @@ cleanup(){
         for i in `seq 10`; do
             m=$(echo "${mounts[idx]}" | awk '{print $2}')
             $verbose && echo "+ umount $m"
+            if ! mountpoint "$m" > /dev/null; then 
+                $verbose && echo "Skipping unmounting $m (not mounted)"
+                break
+            fi
             umount "$m" && break
             echo "Retrying unmounting $m"
             sleep 2
@@ -163,6 +167,11 @@ mkdir -p $rootfs/dev
 mkdir -p $rootfs/run
 
 for m in "${mounts[@]}"; do 
+    target=$(echo "$m" | awk '{print $2}')
+    if mountpoint "$target" > /dev/null; then 
+        $verbose && echo "Skipping (already mounted): $target"
+        continue 
+    fi
     mount --bind $m
 done
 
