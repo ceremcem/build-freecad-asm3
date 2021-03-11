@@ -143,11 +143,11 @@ cleanup(){
     for (( idx=${#mounts[@]}-1 ; idx>=0 ; idx-- )) ; do
         for i in `seq 10`; do
             m=$(echo "${mounts[idx]}" | awk '{print $2}')
-            $verbose && echo "+ umount $m"
             if ! mountpoint "$m" > /dev/null; then 
                 $verbose && echo "Skipping unmounting $m (not mounted)"
                 break
             fi
+            $verbose && echo "+ umount $m"
             umount "$m" && break
             echo "Retrying unmounting $m"
             sleep 2
