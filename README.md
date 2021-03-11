@@ -58,7 +58,7 @@ local$ ssh -X freecad@10.0.10.3
 freecad@fc:~$ 
 ```
 
-> **TIP**: You can also completely skip the `ssh` usage and just use `lxc-attach` to perform below steps and run the compiled application via `run-in-chroot.sh`.
+> **TIP**: You can also completely skip the `ssh` usage and just use `run-in-chroot.sh -n fc` to both perform the below steps and run the compiled application on your host.
 
 ### 3. Download the builder scripts
 
