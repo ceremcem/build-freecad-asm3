@@ -36,7 +36,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
     sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
     sudo lxc-start -n fc
 
-    # add user "freecad" if necessary
+    # add a normal user account
     sudo lxc-attach -n fc
     adduser freecad
     usermod -a -G sudo freecad
