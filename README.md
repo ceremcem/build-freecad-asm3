@@ -30,8 +30,6 @@ Like AppImage, "Setup once, run everywhere".
 
 ### 1. Setup a Debian LXC container 
 
-> **TIP**: You can completely skip the `ssh -X` usage and just use `run-in-chroot.sh -n fc` to both perform the below steps and run the compiled application directly on your host. You will need to stop the LXC container first. 
-
 Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bionic may also work.):
 
     sudo apt-get install debian-keyring debian-archive-keyring
@@ -50,9 +48,24 @@ For external mounts, use `lxc.mount.entry` within the `/var/lib/lxc/fc/config`:
 lxc.mount.entry = /path/to/folder home/freecad/folder none bind 0 0
 ```
 
-### 2. Login to your FreeCAD Machine 
+### Info about chroot approach
 
-> Skip this step and only issue `./run-in-chroot.sh -n fc -u freecad` if you prefer "chroot approach". 
+At this point you have 2 options, whether to use `lxc-*` tools and `ssh`, or use `chroot` for the rest of the operations. You can stick to either option or mix them as you like. 
+
+If you want to avoid setting up LXC networking and the runtime overhead of `ssh -X`, you can use `run-in-chroot.sh` script instead. First stop the running container and then replace any: 
+
+* `lxc-attach -n fc` with `run-in-chroot.sh -n fc`
+* `ssh -X freecad@10.0.10.3` with `run-in-chroot.sh -n fc -u freecad`
+* `ssh -X freecad@10.0.10.3 some-command params` with `run-in-chroot.sh -n fc -u freecad some-command params`
+
+Running FreeCAD in `chroot` environment provides native-like performance, just like AppImage:
+
+```bash
+local$ run-in-chroot.sh -n fc -u freecad 'fc-build/Release/bin/FreeCAD'
+```
+
+
+### 2. Login to your FreeCAD Machine 
 
 > Assuming your container has an IP of `10.0.10.3`.
 > See also [lxc network configuration](https://github.com/aktos-io/lxc-to-the-future/blob/master/network-configuration.md) section. "NAT Configuration" is recommended.
@@ -81,16 +94,10 @@ freecad@fc:~$ ./build-freecad-asm3/build.sh
 Run `FreeCAD` over SSH by `X Forwarding`:
 
 ```
-ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD
+ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD  # or use run-in-chroot.sh script, see above note.
 ```
 
-You may encounter performance issues with complex models, probably due to encryption overhead of `ssh -X`. Running the application inside the `chroot` environment provides a native-like performance, just like an AppImage: 
-
-```bash
-local$ ./tools/run-in-chroot.sh --name fc --user freecad 'fc-build/Release/bin/FreeCAD'
-```
-
-### Debug Friendly Run 
+### 5.1. Debug Friendly Run 
 
 If you need to provide more detailed backtrace, see [debug-friendly-run](./debug-friendly-run.md).
 
