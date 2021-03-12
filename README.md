@@ -60,7 +60,7 @@ If you want to avoid setting up LXC networking and the runtime overhead of `ssh 
 
 Running FreeCAD in `chroot` environment provides native-like performance, just like AppImage:
 
-```bash
+```console
 local$ run-in-chroot.sh -n fc -u freecad 'fc-build/Release/bin/FreeCAD'
 ```
 
@@ -93,7 +93,7 @@ freecad@fc:~$ ./build-freecad-asm3/build.sh
 
 Run `FreeCAD` over SSH by `X Forwarding`:
 
-```
+```bash
 ssh -X freecad@10.0.10.3 fc-build/Release/bin/FreeCAD  # or use run-in-chroot.sh script, see above note.
 ```
 
