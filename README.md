@@ -40,7 +40,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
     sudo lxc-attach -n fc
     adduser freecad
     usermod -a -G sudo freecad
-    su freecad
+    exit
 
 For external mounts, use `lxc.mount.entry` within the `/var/lib/lxc/fc/config`: 
 
@@ -52,9 +52,8 @@ lxc.mount.entry = /path/to/folder home/freecad/folder none bind 0 0
 
 At this point you have 2 options, whether to use `lxc-*` tools and `ssh`, or use `chroot` for the rest of the operations. You can stick to either option or mix them as you like. 
 
-If you want to avoid setting up LXC networking and the runtime overhead of `ssh -X`, you can use `run-in-chroot.sh` script instead. First stop the running container and then replace any: 
+If you want to avoid setting up LXC networking and the runtime overhead of `ssh -X`, you can use `run-in-chroot.sh` script instead. First stop the running container (`lxc-stop -n fc`) and then replace any: 
 
-* `lxc-attach -n fc` with `run-in-chroot.sh -n fc`
 * `ssh -X freecad@10.0.10.3` with `run-in-chroot.sh -n fc -u freecad`
 * `ssh -X freecad@10.0.10.3 some-command params` with `run-in-chroot.sh -n fc -u freecad some-command params`
 
