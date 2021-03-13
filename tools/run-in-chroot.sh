@@ -116,6 +116,7 @@ if [[ ${args[@]} || -n $user ]]; then
     cmd="--rcfile $tmp_file"
     echo '#/bin/bash' > $rootfs/$tmp_file
     echo "cd" >> $rootfs/$tmp_file
+    echo "[[ -f .bashrc ]] && . .bashrc" >> $rootfs/$tmp_file
     commands=$(printf "%s " "${args[@]}")
     echo $commands >> $rootfs/$tmp_file
     echo >> $rootfs/$tmp_file
@@ -137,6 +138,11 @@ cat << RESOLV > $rootfs/etc/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 RESOLV
+
+if ! grep $(hostname) $rootfs/etc/hosts -q; then
+    # prevent "sudo: unable to resolve host erik3: Name or service not known" errors. 
+    echo "127.0.0.1 $(hostname)" >> $rootfs/etc/hosts
+fi
 
 mounted=()
 cleanup(){
