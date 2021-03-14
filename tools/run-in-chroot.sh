@@ -59,6 +59,10 @@ while [ $# -gt 0 ]; do
         --verbose)
             verbose=true
             ;;
+        --) shift
+            args=("$@")
+            break
+            ;;
         # --------------------------------------------------------
         -*) # Handle unrecognized options
             help_die "Unknown option: $1"
@@ -181,4 +185,6 @@ for m in "${mounts[@]}"; do
     mount --bind $m && mounted+=("$target")
 done
 
-chroot $rootfs /usr/bin/sudo -u $user /bin/bash $cmd
+[[ "$user" != "root" ]] && use_sudo="/usr/bin/sudo -u $user" || use_sudo=""
+
+(chroot $rootfs $use_sudo /bin/bash $cmd)

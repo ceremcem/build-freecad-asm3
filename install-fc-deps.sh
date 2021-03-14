@@ -8,5 +8,3 @@ cat $_sdir/packages.txt \
     | grep -v "^#" \
     | sudo xargs apt-get install -y
 
-# Build FreeCAD Assembly3
-$_sdir/build-fc.sh $@
