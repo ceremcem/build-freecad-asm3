@@ -46,10 +46,13 @@ For manual installation, see [manual-install.md](./manual-install.md).
 
 If you need to provide more detailed backtrace, see [debug-friendly-run](./debug-friendly-run.md).
 
+# Out Of Memory situations 
+
+You may run into out of memory (oom) situations while compiling FreeCAD.
+
+In order to prevent a total freeze, you are adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
+
 # Tools 
 
 See also [./tools](./tools)
 
-Recommended: https://github.com/rfjakob/earlyoom
-
-   
