@@ -44,7 +44,13 @@ for i in 1 2; do ./auto.sh --freecad-src /path/to/FreeCAD; done
 
 For manual installation, see [manual-install.md](./manual-install.md).
 
-If you need to provide more detailed backtrace, see [debug-friendly-run](./debug-friendly-run.md).
+# Run 
+
+```bash
+./freecad.sh
+```
+
+If you need to provide more detailed backtrace in case of a crash, see [debug-friendly-run](./debug-friendly-run.md).
 
 # Out Of Memory situations 
 
