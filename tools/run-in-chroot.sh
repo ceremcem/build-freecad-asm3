@@ -13,6 +13,8 @@ show_help(){
         -u, --user      : Login as user
         --verbose       : Verbose mode
         --help          : Shows this info
+        --umount        : unmount folders on exit regardless of
+                          mounted by this PID
 
 HELP
 }
@@ -38,6 +40,7 @@ name=
 user=root
 verbose=false
 cmd=
+_umount=false
 # ---------------------------
 args_backup=("$@")
 args=()
@@ -58,6 +61,9 @@ while [ $# -gt 0 ]; do
             ;;
         --verbose)
             verbose=true
+            ;;
+        --umount)
+            _umount=true
             ;;
         --) shift
             args=("$@")
@@ -105,10 +111,10 @@ mounts+=("/dev/pts  $rootfs/dev/pts")
 mounts+=("/run      $rootfs/run")
 if [[ -n $_mounts ]]; then 
     while read -r src tgt; do
-        $verbose && echo "Checking $rootfs/$tgt"
+        $verbose && echo "Checking if $rootfs/$tgt exists"
         if [[ ! -d $rootfs/$tgt ]]; then 
             # create the target dir regardless of `create=dir` directive 
-            mkdir $rootfs/$tgt
+            mkdir -p $rootfs/$tgt
             ownership=$(stat -c "%u:%g" $(dirname $rootfs/$tgt))
             chown $ownership $rootfs/$tgt
         fi
@@ -186,7 +192,11 @@ for m in "${mounts[@]}"; do
     target=$(echo "$m" | awk '{print $2}')
     if mountpoint "$target" > /dev/null; then 
         $verbose && echo "Skipping (already mounted): $target"
-        continue 
+        if $_umount; then
+            echo "Info: $target will be umounted anyway"
+            mounted+=("$target") # umount on exit anyway
+        fi
+        continue
     fi
     mount --bind $m && mounted+=("$target")
 done
