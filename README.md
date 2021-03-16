@@ -44,6 +44,12 @@ for i in 1 2; do ./auto.sh --freecad-src /path/to/FreeCAD; done
 
 For manual installation, see [manual-install.md](./manual-install.md).
 
+### Out Of Memory situations 
+
+You may run into out of memory (oom) situations while compiling FreeCAD.
+
+In order to prevent a total freeze, you are adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
+
 # Run 
 
 ```bash
@@ -51,12 +57,6 @@ For manual installation, see [manual-install.md](./manual-install.md).
 ```
 
 If you need to provide more detailed backtrace in case of a crash, see [debug-friendly-run](./debug-friendly-run.md).
-
-# Out Of Memory situations 
-
-You may run into out of memory (oom) situations while compiling FreeCAD.
-
-In order to prevent a total freeze, you are adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
 
 # Accessing your local files 
 
