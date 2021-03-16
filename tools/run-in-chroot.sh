@@ -92,8 +92,8 @@ cpath="/var/lib/lxc/$name"
 [[ $(whoami) = "root" ]] || { sudo "$0" "$@"; exit 0; }
 
 config="$cpath/config"
-rootfs=$(cat $config | grep "^lxc.rootfs.path" | sed -r 's/^.+=\s*//' | rev | cut -d: -f1 | rev)
-_mounts=$(cat $config | grep "^lxc.mount.entry" | sed -r 's/^.+=\s*//' | awk '{print $1 " " $2}')
+rootfs=$(cat $config | grep "^lxc.rootfs.path" | sed -r 's/^[^=]+=\s*//' | rev | cut -d: -f1 | rev)
+_mounts=$(cat $config | grep "^lxc.mount.entry" | sed -r 's/^[^=]+=\s*//' | awk '{print $1 " " $2}')
 
 [[ -z $rootfs ]] && die "lxc.rootfs.path should not be empty."
 
@@ -106,11 +106,17 @@ mounts+=("/run      $rootfs/run")
 if [[ -n $_mounts ]]; then 
     while read -r src tgt; do
         $verbose && echo "Checking $rootfs/$tgt"
-        if [[ -d $rootfs/$tgt ]]; then 
+        if [[ ! -d $rootfs/$tgt ]]; then 
+            # create the target dir regardless of `create=dir` directive 
+            mkdir $rootfs/$tgt
+            ownership=$(stat -c "%u:%g" $(dirname $rootfs/$tgt))
+            chown $ownership $rootfs/$tgt
+        fi
+        if [[ -d $src ]]; then 
             mounts+=("$src $rootfs/$tgt")
         else
             # Skip non-existent targets
-            >&2 echo "WARNING: No such directory exists: $rootfs/$tgt"
+            >&2 echo "SKIPPING: No such source directory exists: $src"
         fi
     done <<< $_mounts
 fi

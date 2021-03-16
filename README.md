@@ -52,6 +52,15 @@ You may run into out of memory (oom) situations while compiling FreeCAD.
 
 In order to prevent a total freeze, you are adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
 
+# Accessing your local files 
+
+You can create bind mounts within the LXC config file (`/var/lib/lxc/fc/config`): 
+
+```
+lxc.mount.entry = /home/ceremcem/.FreeCAD home/fc/.FreeCAD none bind,create=dir 0 0
+lxc.mount.entry = /home/ceremcem/projects home/fc/projects none bind,create=dir 0 0
+```
+
 # Tools 
 
 See also [./tools](./tools)

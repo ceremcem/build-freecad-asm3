@@ -21,11 +21,7 @@ Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bi
     usermod -a -G sudo fc
     exit
 
-For external mounts, use `lxc.mount.entry` within the `/var/lib/lxc/fc/config`: 
-
-```
-lxc.mount.entry = /path/to/folder home/fc/folder none bind 0 0
-```
+(See also ../RADME.md#Accessing Files)
 
 ### Info about chroot approach
 
