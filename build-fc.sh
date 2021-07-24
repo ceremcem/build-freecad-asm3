@@ -29,6 +29,7 @@ HELP
 die(){
     >&2 echo
     >&2 echo "$@"
+    >&2 echo
     exit 1
 }
 
@@ -91,8 +92,8 @@ cd $OLDPWD
 if ! $only_compile; then
     ### LinkStage3 latest Github commit
     #----------------------------------
-    branch=LinkStage3
-    remote=origin
+    [[ -z "${branch:-}" ]] && die "\$branch variable must be set within config.sh."
+    remote=${remote:-origin}
     cd "$(dirname "$src")"
     [[ -d $src ]] || git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git
     cd $src
