@@ -1,14 +1,12 @@
 # Build FreeCAD Assembly3
 
-To be able to use Assembly3 workbench, it's necessary to build LinkStage3 branch first and then install Assembly3 workbench. 
-
-These scripts automates the building process, creates the FreeCAD binary in `~/fc-build/Release/bin/`. 
+These scripts automates the `LinkStage3` building process, creates the FreeCAD binary in `~/fc-build/Release/bin/`. 
 
 ### Advantages 
 
-Main intention of these scripts is to run them in a clean LXC container (or Virtual Machine), just like Docker. 
+Main intention of these scripts is to run them in a clean LXC container, just like Docker. 
 
-Using a virtual build/run environment has invaluable advantages for a bleeding edge application:
+Similar to the list on [FreeCAD Docker Wiki](https://wiki.freecadweb.org/Compile_on_Docker), using a virtual build/run environment has many invaluable advantages for a bleeding edge application:
 
 1. Build process won't be affected by any unintentional system/dependency upgrades. 
 2. You can perfectly be in sync with the developers' environment conditions (eg. specific version of a specific dependency) without affecting rest of your system.
@@ -19,86 +17,57 @@ Using a virtual build/run environment has invaluable advantages for a bleeding e
 7. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
 8. You can host and run multiple versions that refuses to build in the other's dependency environment (or refuses to install the dependencies because it conflicts with the other's dependencies) simultaneously. 
 
-# Building directly on host
+### Advantages over AppImage
 
-You may also prefer building FreeCAD directly on your machine. To do so: 
+You can always compile: 
+* the latest version by only fetching a few kB of source code.
+* any previous version. 
+* with a different configuration. 
 
-```console
-$ git clone https://github.com/ceremcem/build-freecad-asm3
-$ ./build-freecad-asm3/build.sh 
-(after building)
-$ ~/fc-build/Release/bin/FreeCAD
+Like AppImage, "Setup once, run everywhere".
+
+# Setup
+
+You can automatically initiate whole setup by: 
+
+```bash
+git clone https://github.com/ceremcem/build-freecad-asm3
+cd build-freecad-asm3/tools
+for i in 1 2; do ./auto.sh; done # yes, you need to run twice, see: https://unix.stackexchange.com/q/627262/65781
 ```
 
-> For Debian users: If you don't want to pollute your package database with the necessary dependencies, you can use [`create-virtual-deps.sh`](https://github.com/ceremcem/debian-notes/blob/9bc61a3c9f65c5c27d7ab8d160e3d596ed4544e3/package-control/create-virtual-deps.sh) to create a virtual package that defines the dependencies. You can easily remove the dependencies later on.  
+If you have FreeCAD source already cloned, pass the location as a parameter:
 
-# Building in and using from a container 
-
-### 1. Setup a Debian LXC container or VM 
-
-Setup a clean installation (minimum required version is Debian Buster. Ubuntu Bionic may also work.):
-* either on VirtualBox (or similar virtualization software)
-  * Use debian.iso from https://www.debian.org/
-      
-* or on LXC (more suitable for advanced/daily usage in terms of performance and easiness)
-
-        # if necessary: sudo apt-get install debian-keyring debian-archive-keyring
-        sudo lxc-create -n fc -t debian [-B btrfs] -- -r buster --packages xbase-clients nano sudo tmux git
-        sudo lxc-start fc
-
-        # add user "freecad" if necessary
-        sudo lxc-attach fc
-        useradd freecad
-        usermod -a -G sudo freecad
-
-### 2. Login to your FreeCAD Machine 
-
-> Assuming your VM/container has an IP of `10.0.10.3`
-
-```console
-local$ ssh -XC freecad@10.0.10.3
-freecad@fc:~$ 
+```bash
+for i in 1 2; do ./auto.sh --freecad-src /path/to/FreeCAD; done
 ```
 
-### 3. Download the builder scripts
+For manual installation, see [manual-install.md](./manual-install.md).
 
-```console
-freecad@fc:~$ git clone https://github.com/ceremcem/build-freecad-asm3
+### Out Of Memory situations 
+
+You may run into out of memory (oom) situations while compiling FreeCAD.
+
+In order to prevent a total freeze, you are adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
+
+# Run 
+
+```bash
+./freecad.sh
 ```
 
-### 4. Install or Update FreeCAD-Asm3
+If you need to provide more detailed backtrace in case of a crash, see [debug-friendly-run](./debug-friendly-run.md).
 
-```console
-freecad@fc:~$ ./build-freecad-asm3/build.sh 
-```
+# Accessing your local files 
 
->     ./build-freecad-asm3/build-fc.sh  # to build only LinkStage3 and Asm3
-
-### 5. Run FreeCAD-Asm3
-
-Run `freecad-git` over SSH by `X Forwarding`:
+You can create bind mounts within the LXC config file (`/var/lib/lxc/fc/config`): 
 
 ```
-ssh -XC freecad@10.0.10.3 fc-build/Release/bin/FreeCAD
+lxc.mount.entry = /home/ceremcem/.FreeCAD home/fc/.FreeCAD none bind,create=dir 0 0
+lxc.mount.entry = /home/ceremcem/projects home/fc/projects none bind,create=dir 0 0
 ```
 
-### Debug Friendly Run 
+# Tools 
 
-If you need to provide more detailed backtrace, see [debug-friendly-run](./debug-friendly-run.md).
+See also [./tools](./tools)
 
-# Tips 
-
-### Add command line shortcut
-
-Preferably add `.bashrc` the following line: 
- 
-  ```bash
-  alias fc-asm3-remote='ssh -XC freecad@10.0.10.3 fc-build/Release/bin/FreeCAD'
-  ```
- 
-and then run FreeCAD-Asm3 by simply issuing: 
- 
-   ```console
-   local$ fc-asm3-remote 
-   ```
-   

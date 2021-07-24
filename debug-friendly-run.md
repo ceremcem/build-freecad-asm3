@@ -3,10 +3,10 @@
 In order to get more accurate stack traces, set 
 
 ```
-build_type="Release"
+build_type="Debug"
 ```
 
-in `config.sh` and run FreeCAD under `gdb`:
+in `config.sh`, compile (if not compiled already) and run FreeCAD under `gdb`:
 
 1. Add the following into `.bashrc` [[1]](https://blog.cryptomilk.org/2010/12/23/gdb-backtrace-to-file/):
 
@@ -16,7 +16,7 @@ in `config.sh` and run FreeCAD under `gdb`:
 
 2. Run FreeCAD:
 
-       bt ~/fc-build/Release/bin/FreeCAD
+       bt ~/fc-build/Debug/bin/FreeCAD
 
 3. After crash, debug output will be at `~/gdb.bt`
 
