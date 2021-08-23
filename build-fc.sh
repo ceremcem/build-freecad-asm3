@@ -97,9 +97,16 @@ if ! $only_compile; then
     cd "$(dirname "$src")"
     [[ -d $src ]] || git clone --single-branch -b $branch https://github.com/realthunder/FreeCAD.git
     cd $src
-    git checkout $branch
-    git reset --hard $remote/$branch
-    git pull
+    if git checkout $branch 2> /dev/null; then
+        echo "Branch \"$branch\" exists."
+        git reset --hard HEAD
+        git pull $remote $branch
+    else
+        echo "Branch \"$branch\" does not exist, fetching."
+        git fetch $remote $branch
+        git checkout FETCH_HEAD -b $branch
+    fi
+
     #git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
     $only_fetch && exit 0
 else
