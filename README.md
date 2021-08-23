@@ -53,7 +53,7 @@ In order to prevent a total freeze, you are adviced to install `earlyoom` before
 # Run 
 
 ```bash
-./freecad.sh
+./tools/freecad.sh
 ```
 
 If you need to provide more detailed backtrace in case of a crash, see [debug-friendly-run](./debug-friendly-run.md).
