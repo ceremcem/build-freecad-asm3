@@ -106,6 +106,7 @@ if ! $only_compile; then
         git fetch $remote $branch
         git checkout FETCH_HEAD -b $branch
     fi
+    [[ -n ${commit:-} ]] && git checkout $commit
 
     #git branch --set-upstream-to $remote # do not forcefully track the origin, create a warning instead.
     $only_fetch && exit 0
