@@ -106,7 +106,7 @@ packages="nano sudo git"   # tmux
 $support_ssh_x && packages="$packages xbase-clients"
 
 password=$user
-$CHROOT -- "apt-get update && apt-get install -y $packages; \
+$CHROOT -- "apt-get update --allow-releaseinfo-change && apt-get install -y $packages; \
     grep $user /etc/passwd -q || { \
         echo 'adding user $user'; \
         useradd -m $user; \
