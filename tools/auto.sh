@@ -86,42 +86,34 @@ is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
 
 CHROOT="$_sdir/run-in-chroot.sh -n $container_name"
 
-if [[ ! -d $LXC_PATH/$container_name ]]; then 
-    set -x 
-    apt-get install debian-keyring debian-archive-keyring
-    lxc-create -n $container_name -t debian $bdev -- -r buster # might not work: --packages 
-    set +x
-    if lxc-start -n $container_name; then 
-        echo "$container_name successfully created."
-        while :; do
-            timeout 3 lxc-stop -n $container_name && break
-            echo "Retrying stopping $container_name"
-            sleep 2
-        done
-    else
-        die "Couldn't start $container_name."
-    fi
-
-    # install basic packages
-    packages="nano sudo git"   # tmux
-    $support_ssh_x && packages="$packages xbase-clients"
-
-    password=$user
-    $CHROOT -- "apt-get update && apt-get install -y $packages; \
-        grep $user /etc/passwd -q || { \
-            echo 'adding user $user'; \
-            useradd -m $user; \
-            usermod -a -G sudo $user; \
-            echo "$user:$password" | chpasswd; \
-        }"
-
-    echo "Exiting for a workaround, see: https://unix.stackexchange.com/q/627262/65781"
-    echo "Manually restart this script once more."
-    exit 2
-else 
-    echo "Container $container_name seems to be already created."
+set -x 
+apt-get install debian-keyring debian-archive-keyring
+lxc-create -n $container_name -t debian $bdev -- -r buster # might not work: --packages 
+set +x
+if lxc-start -n $container_name; then 
+    echo "$container_name successfully created."
+    while :; do
+       timeout 3 lxc-stop -n $container_name && break
+       echo "Retrying stopping $container_name"
+       sleep 2
+    done
+else
+    die "Couldn't start $container_name."
 fi
-# LXC container is created. 
+
+# install basic packages
+packages="nano sudo git"   # tmux
+$support_ssh_x && packages="$packages xbase-clients"
+
+password=$user
+$CHROOT -- "apt-get update && apt-get install -y $packages; \
+    grep $user /etc/passwd -q || { \
+        echo 'adding user $user'; \
+        useradd -m $user; \
+        usermod -a -G sudo $user; \
+        echo "$user:$password" | chpasswd; \
+    }"
+# LXC container is created.
 
 builder_scripts="$LXC_PATH/$container_name/rootfs/home/$user/$(basename $(dirname $_sdir))"
 if [[ ! -d "$builder_scripts" ]]; then

@@ -129,7 +129,7 @@ fi
 
 if [[ ${args[@]} || -n $user ]]; then
     tmp_file=/tmp/cmd.sh
-    cmd="--rcfile $tmp_file"
+    cmd="-f $tmp_file"
     echo '#/bin/bash' > $rootfs/$tmp_file
     echo "cd" >> $rootfs/$tmp_file
     echo "[[ -f .bashrc ]] && . .bashrc" >> $rootfs/$tmp_file

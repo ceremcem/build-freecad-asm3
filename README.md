@@ -33,13 +33,13 @@ You can automatically initiate whole setup by:
 ```bash
 git clone https://github.com/ceremcem/build-freecad-asm3
 cd build-freecad-asm3/tools
-for i in 1 2; do ./auto.sh; done # yes, you need to run twice, see: https://unix.stackexchange.com/q/627262/65781
+./auto.sh
 ```
 
 If you have FreeCAD source already cloned, pass the location as a parameter:
 
 ```bash
-for i in 1 2; do ./auto.sh --freecad-src /path/to/FreeCAD; done
+./auto.sh --freecad-src /path/to/FreeCAD
 ```
 
 For manual installation, see [manual-install.md](./manual-install.md).
