@@ -1,5 +1,6 @@
 #!/bin/bash
 _sdir=$(dirname "$(readlink -f "$0")")
+_rel="${_sdir##$PWD}"
 set -u
 
 LXC_PATH="/var/lib/lxc"
@@ -17,6 +18,15 @@ show_help(){
         --freecad-src   : Path to existing FreeCAD git source (skip for a new clone)
 
 HELP
+}
+
+end_message(){
+    cat <<EOL
+Run FreeCAD anytime with:
+
+    .$_rel/freecad.sh
+
+EOL
 }
 
 die(){
@@ -78,6 +88,13 @@ done; set -- "${args_backup[@]-}"
 
 [[ "$(whoami)" == "root" ]] || { sudo "$0" "$@"; exit 0; }
 
+[[ -d "$LXC_PATH/$container_name" ]] && { \
+    echo ; \
+    echo "Skipping setup: Container already exists at $LXC_PATH/$container_name."; \
+    echo ; \
+    end_message; \
+    exit 1; }
+
 is_on_btrfs(){
     stat -f --format=%T "$1" | grep -q btrfs
 }
@@ -132,11 +149,6 @@ fi
 $CHROOT -- "cd /home/$user; $(basename $builder_scripts)/install-fc-deps.sh || dpkg --configure -a \
     && sudo -u $user $(basename $builder_scripts)/build-fc.sh"
 
-cat <<EOL
-FreeCAD is successfully compiled.
+echo "FreeCAD is successfully compiled."
 
-Run anytime with: 
-
-    ./freecad.sh
-
-EOL
+end_message
