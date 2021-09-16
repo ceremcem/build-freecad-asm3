@@ -15,7 +15,8 @@ show_help(){
         --help          : Shows this info
         --umount        : unmount folders on exit regardless of
                           mounted by this PID
-
+        --unattended    : Run unattended scripts within the target rootfs
+                          (no interactive mode)
 HELP
 }
 
