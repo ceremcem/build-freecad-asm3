@@ -41,6 +41,7 @@ user=root
 verbose=false
 cmd=
 _umount=false
+unattended=false
 # ---------------------------
 args_backup=("$@")
 args=()
@@ -64,6 +65,9 @@ while [ $# -gt 0 ]; do
             ;;
         --umount)
             _umount=true
+            ;;
+        --unattended)
+            unattended=true
             ;;
         --) shift
             args=("$@")
@@ -129,7 +133,11 @@ fi
 
 if [[ ${args[@]} || -n $user ]]; then
     tmp_file=/tmp/cmd.sh
-    cmd="-f $tmp_file"
+    if $unattended; then
+        cmd="-f $tmp_file"
+    else
+        cmd="--rcfile $tmp_file"
+    fi
     echo '#/bin/bash' > $rootfs/$tmp_file
     echo "cd" >> $rootfs/$tmp_file
     echo "[[ -f .bashrc ]] && . .bashrc" >> $rootfs/$tmp_file

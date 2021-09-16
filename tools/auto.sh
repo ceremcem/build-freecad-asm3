@@ -101,7 +101,7 @@ is_on_btrfs(){
 
 is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
 
-CHROOT="$_sdir/run-in-chroot.sh -n $container_name"
+CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
 
 set -x 
 apt-get install debian-keyring debian-archive-keyring
