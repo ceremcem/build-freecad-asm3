@@ -191,6 +191,8 @@ cleanup(){
 }
 trap cleanup EXIT
 
+$verbose && echo "Creating mountpoints"
+
 mkdir -p $rootfs/proc
 mkdir -p $rootfs/sys
 mkdir -p $rootfs/dev
@@ -206,9 +208,11 @@ for m in "${mounts[@]}"; do
         fi
         continue
     fi
+    $verbose && echo "Mounting $target"
     mount --bind $m && mounted+=("$target")
 done
 
 [[ "$user" != "root" ]] && use_sudo="/usr/bin/sudo -u $user" || use_sudo=""
 
+$verbose && echo "Performing chroot commad"
 (chroot $rootfs $use_sudo /bin/bash $cmd)
