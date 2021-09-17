@@ -44,6 +44,13 @@ If you have FreeCAD source already cloned, pass the location as a parameter:
 
 For manual installation, see [manual-install.md](./manual-install.md).
 
+### Dependencies 
+
+1. LXC tools (`lxc-create`, `lxc-start`, etc...). On a Debian host, you can install them by 
+
+       sudo apt-get install lxc
+
+
 ### Out Of Memory situations 
 
 You may run into out of memory (oom) situations while compiling FreeCAD.
