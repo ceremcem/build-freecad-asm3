@@ -33,14 +33,17 @@ You can automatically initiate whole setup by:
 ```bash
 git clone https://github.com/ceremcem/build-freecad-asm3
 cd build-freecad-asm3/tools
-./auto.sh
+./setup-all.sh
 ```
 
 If you have FreeCAD source already cloned, pass the location as a parameter:
 
 ```bash
-./auto.sh --freecad-src /path/to/FreeCAD
+./setup-all.sh --freecad-src /path/to/existing/FreeCAD
 ```
+
+Your `existing/FreeCAD` clone will be copied into the container and it will never be used again. You are free to delete `/path/to/existing/FreeCAD` once your container is up and FreeCAD is started compiling.
+
 
 For manual installation, see [manual-install.md](./manual-install.md).
 
@@ -64,6 +67,20 @@ In order to prevent a total freeze, you are adviced to install `earlyoom` before
 ```
 
 If you need to provide more detailed backtrace in case of a crash, see [debug-friendly-run](./debug-friendly-run.md).
+
+# Updating FreeCAD 
+
+When you want to pull new commits and update your FreeCAD binary, issue the following command: 
+
+```bash
+./update-fc.sh
+```
+
+This command will:
+
+* Pull new commits into the FreeCAD clone at `/var/lib/lxc/fc/rootfs/home/aea/FreeCAD`
+* Recompile the source code inside the container
+
 
 # Accessing your local files 
 
