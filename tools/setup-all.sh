@@ -92,6 +92,8 @@ done; set -- "${args_backup[@]-}"
     echo ; \
     echo "Skipping setup: Container already exists at $LXC_PATH/$container_name."; \
     echo ; \
+    echo "If you wanted to update your FreeCAD binary, use ./update-fc.sh script instead."; \
+    echo ; \
     end_message; \
     exit 1; }
 
