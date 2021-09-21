@@ -78,7 +78,7 @@ When you want to pull new commits and update your FreeCAD binary, issue the foll
 
 This command will:
 
-* Pull new commits into the FreeCAD clone at `/var/lib/lxc/fc/rootfs/home/aea/FreeCAD`
+* Pull new commits into the FreeCAD clone at `/var/lib/lxc/fc/rootfs/home/fc/FreeCAD`
 * Recompile the source code inside the container
 
 ### Using a specific branch, remote or commit
@@ -87,8 +87,8 @@ If you need to compile the FreeCAD against a specific branch, remote or commit, 
 
 ```console
 local:$ ./attach.sh
-aea@debian:~$ nano build-freecad-asm3/config.sh   # edit accordingly 
-aea@debian:~$ exit 
+fc@debian:~$ nano build-freecad-asm3/config.sh   # edit accordingly 
+fc@debian:~$ exit 
 local:$ ./update-fc.sh
 ```
 
