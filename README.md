@@ -81,6 +81,16 @@ This command will:
 * Pull new commits into the FreeCAD clone at `/var/lib/lxc/fc/rootfs/home/aea/FreeCAD`
 * Recompile the source code inside the container
 
+### Using a specific branch, remote or commit
+
+If you need to compile the FreeCAD against a specific branch, remote or commit, edit the configuration file within the container and rebuild FreeCAD:
+
+```console
+local:$ ./attach.sh
+aea@debian:~$ nano build-freecad-asm3/config.sh   # edit accordingly 
+aea@debian:~$ exit 
+local:$ ./update-fc.sh
+```
 
 # Accessing your local files 
 
