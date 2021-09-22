@@ -99,13 +99,9 @@ if ! $only_compile; then
     cd $src
     if git checkout $branch 2> /dev/null; then
         echo "Branch \"$branch\" exists."
-        git reset --hard $remote/HEAD
         echo "Pulling new commits"
-        if ! git pull $remote $branch; then
-            echo "Something went wrong, resetting to $remote/HEAD"
-            git fetch $remote $branch
-            git reset --hard FETCH_HEAD
-        fi
+        git fetch $remote $branch
+        git reset --hard FETCH_HEAD
     else
         echo "Branch \"$branch\" does not exist, fetching."
         git fetch $remote $branch
