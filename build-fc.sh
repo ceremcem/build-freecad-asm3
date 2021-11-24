@@ -140,6 +140,7 @@ $disable_fem || opts="$opts -DBUILD_FEM_NETGEN=1"
 	-DCMAKE_BUILD_TYPE=$build_type \
 	-DBUILD_QT5=ON \
 	-DPYTHON_EXECUTABLE=/usr/bin/python3 \
+    -DBUILD_ENABLE_CXX_STD:STRING=C++17 \
     $opts \
 )
 
