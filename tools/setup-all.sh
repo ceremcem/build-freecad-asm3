@@ -102,17 +102,6 @@ CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
 
 [[ -d "$LXC_PATH/$container_name" ]] || die "Please create the container first."
 
-if lxc-start -n $container_name; then 
-    echo "$container_name successfully created."
-    while :; do
-       timeout 3 lxc-stop -n $container_name && break
-       echo "Retrying stopping $container_name"
-       sleep 2
-    done
-else
-    die "Couldn't start $container_name."
-fi
-
 # install basic packages
 packages="nano sudo git"   # tmux
 $support_ssh_x && packages="$packages xbase-clients"
