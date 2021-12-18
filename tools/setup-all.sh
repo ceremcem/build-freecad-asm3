@@ -100,7 +100,7 @@ is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
 
 CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
 
-[[ -d "$LXC_PATH/$container_name" ]] && die "Please create the container first."
+[[ -d "$LXC_PATH/$container_name" ]] || die "Please create the container first."
 
 if lxc-start -n $container_name; then 
     echo "$container_name successfully created."
