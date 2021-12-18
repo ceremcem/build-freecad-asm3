@@ -112,6 +112,8 @@ if ! $container_exists; then
     set +x
 fi
 
+[[ -d "$LXC_PATH/$container_name" ]] && die "Please create the container first."
+
 if lxc-start -n $container_name; then 
     echo "$container_name successfully created."
     while :; do
