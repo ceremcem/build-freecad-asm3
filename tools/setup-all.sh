@@ -13,9 +13,10 @@ show_help(){
 
     Options:
 
-        --name          : Container name (default: $container_name)
-        --lxc-path      : LXC Path (default: $LXC_PATH)
-        --freecad-src   : Path to existing FreeCAD git source (skip for a new clone)
+        --name              : Container name (default: $container_name)
+        --container-exists  : Skip creating a new container
+        --lxc-path          : LXC Path (default: $LXC_PATH)
+        --freecad-src SRC   : Use SRC as path to existing FreeCAD git source (skip for a new clone)
 
 HELP
 }
@@ -25,6 +26,10 @@ end_message(){
 Run FreeCAD anytime with:
 
     .$_rel/freecad.sh
+
+To update your FreeCAD binary: 
+
+    .$_rel/update-fc.sh
 
 EOL
 }
@@ -47,6 +52,7 @@ help_die(){
 support_ssh_x=false
 user="fc"
 freecad_src=
+container_exists=false
 # Initialize parameters
 # ---------------------------
 args_backup=("$@")
@@ -65,6 +71,9 @@ while [ $# -gt 0 ]; do
             ;;
         --lxc-path) shift
             LXC_PATH="$1"
+            ;;
+        --container-exists)
+            contaner_exists=true
             ;;
         --freecad-src) shift
             freecad_src="$1"
@@ -88,15 +97,6 @@ done; set -- "${args_backup[@]-}"
 
 [[ "$(whoami)" == "root" ]] || { sudo "$0" "$@"; exit 0; }
 
-[[ -d "$LXC_PATH/$container_name" ]] && { \
-    echo ; \
-    echo "Skipping setup: Container already exists at $LXC_PATH/$container_name."; \
-    echo ; \
-    echo "If you wanted to update your FreeCAD binary, use ./update-fc.sh script instead."; \
-    echo ; \
-    end_message; \
-    exit 1; }
-
 is_on_btrfs(){
     stat -f --format=%T "$1" | grep -q btrfs
 }
@@ -105,10 +105,13 @@ is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
 
 CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
 
-set -x 
-apt-get install debian-keyring debian-archive-keyring
-lxc-create -n $container_name -t debian $bdev -- -r buster # might not work: --packages 
-set +x
+if ! $container_exists; then 
+    set -x 
+    hash apt-get 2> /dev/null && apt-get install debian-keyring debian-archive-keyring
+    lxc-create -n $container_name -t debian $bdev -- -r buster # might not work: --packages 
+    set +x
+fi
+
 if lxc-start -n $container_name; then 
     echo "$container_name successfully created."
     while :; do
