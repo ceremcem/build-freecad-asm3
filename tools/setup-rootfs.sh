@@ -13,8 +13,8 @@ show_help(){
 
     Options:
 
-        --name              : Container name (default: $container_name)
-        --lxc-path          : LXC Path (default: $LXC_PATH)
+        --name NAME         : Container name (default: $container_name)
+        --lxc-path PATH     : LXC Path (default: $LXC_PATH)
         --freecad-src SRC   : Use SRC as path to existing FreeCAD git source (skip for a new clone)
 
 HELP
@@ -115,7 +115,6 @@ $CHROOT -- "export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
         usermod -a -G sudo $user; \
         echo "$user:$password" | chpasswd; \
     }"
-# LXC container is created.
 
 builder_scripts="$LXC_PATH/$container_name/rootfs/home/$user/$(basename $(dirname $_sdir))"
 if [[ ! -d "$builder_scripts" ]]; then
