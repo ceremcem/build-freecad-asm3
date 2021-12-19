@@ -37,7 +37,7 @@ You may run into out of memory (oom) situations while compiling FreeCAD.
 
 In order to prevent a total freeze, you are strongly adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
 
-### Setup a Debian container
+### Install FreeCAD inside the Debian container
 
 1. Get the sources:
 
@@ -48,9 +48,9 @@ cd build-freecad-asm3/tools
 
 2. Install a Debian Buster LXC container: 
 
-       * On a Debian host: run `./create-container-on-debian-host.sh`
-       * On an Arch Linux host: Follow [this Gist](https://gist.github.com/ceremcem/d093287564b3729f6bfc61c5006ee0aa) but use `fc` instead of `mydebian` as the container name.
-       * (Create a request for other Linux distros)
+  * On a Debian host: run `./create-container-on-debian-host.sh`
+  * On an Arch Linux host: Follow [this Gist](https://gist.github.com/ceremcem/d093287564b3729f6bfc61c5006ee0aa) but use `fc` instead of `mydebian` as the container name.
+  * (Create a request for other Linux distros)
 
 3. Setup the LXC container: 
 
