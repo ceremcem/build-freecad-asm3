@@ -49,7 +49,7 @@ cd build-freecad-asm3/tools
 
 ```
 ./setup-rootfs.sh
-# or, if you have FreeCAD source already cloned in somewhere on your host:
+# or, if you have FreeCAD source already cloned somewhere on your host:
 # ./setup-all.sh --freecad-src /path/to/existing/FreeCAD  
 ```
 
