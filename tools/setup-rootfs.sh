@@ -13,9 +13,9 @@ show_help(){
 
     Options:
 
-        --name          : Container name (default: $container_name)
-        --lxc-path      : LXC Path (default: $LXC_PATH)
-        --freecad-src   : Path to existing FreeCAD git source (skip for a new clone)
+        --name NAME         : Container name (default: $container_name)
+        --lxc-path PATH     : LXC Path (default: $LXC_PATH)
+        --freecad-src SRC   : Use SRC as path to existing FreeCAD git source (skip for a new clone)
 
 HELP
 }
@@ -25,6 +25,10 @@ end_message(){
 Run FreeCAD anytime with:
 
     .$_rel/freecad.sh
+
+To update your FreeCAD binary: 
+
+    .$_rel/update-fc.sh
 
 EOL
 }
@@ -88,15 +92,6 @@ done; set -- "${args_backup[@]-}"
 
 [[ "$(whoami)" == "root" ]] || { sudo "$0" "$@"; exit 0; }
 
-[[ -d "$LXC_PATH/$container_name" ]] && { \
-    echo ; \
-    echo "Skipping setup: Container already exists at $LXC_PATH/$container_name."; \
-    echo ; \
-    echo "If you wanted to update your FreeCAD binary, use ./update-fc.sh script instead."; \
-    echo ; \
-    end_message; \
-    exit 1; }
-
 is_on_btrfs(){
     stat -f --format=%T "$1" | grep -q btrfs
 }
@@ -105,34 +100,21 @@ is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
 
 CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
 
-set -x 
-apt-get install debian-keyring debian-archive-keyring
-lxc-create -n $container_name -t debian $bdev -- -r buster # might not work: --packages 
-set +x
-if lxc-start -n $container_name; then 
-    echo "$container_name successfully created."
-    while :; do
-       timeout 3 lxc-stop -n $container_name && break
-       echo "Retrying stopping $container_name"
-       sleep 2
-    done
-else
-    die "Couldn't start $container_name."
-fi
+[[ -d "$LXC_PATH/$container_name" ]] || die "Please create the container first."
 
 # install basic packages
 packages="nano sudo git"   # tmux
 $support_ssh_x && packages="$packages xbase-clients"
 
 password=$user
-$CHROOT -- "apt-get update --allow-releaseinfo-change && apt-get install -y $packages; \
+$CHROOT -- "export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH'; \
+    apt-get update --allow-releaseinfo-change && apt-get install -y $packages; \
     grep $user /etc/passwd -q || { \
         echo 'adding user $user'; \
         useradd -m $user; \
         usermod -a -G sudo $user; \
         echo "$user:$password" | chpasswd; \
     }"
-# LXC container is created.
 
 builder_scripts="$LXC_PATH/$container_name/rootfs/home/$user/$(basename $(dirname $_sdir))"
 if [[ ! -d "$builder_scripts" ]]; then
