@@ -14,7 +14,7 @@ Similar to the list on [FreeCAD Docker Wiki](https://wiki.freecadweb.org/Compile
 4. In case of an event described in the previous step, you had rolled back and have been continuing your work. Then the developer responded and requested some more information. Just boot the crashing VM/container, provide the information, continue your work from where you left. 
 5. A VM/container provides a natural security layer for malicious or accidental harms that uses potential holes of the software (such as a poorly designed workbench or macro).
 6. Make the non-portable application portable: On another operating system, just start the container and use your app as usual. 
-7. You can host and run multiple versions that refuses to build in the other's dependency environment (or refuses to install the dependencies because it conflicts with the other's dependencies) simultaneously. 
+7. You can host and run multiple versions of the application simultaneously that refuses to build in the other's dependency environment (or refuses to install the dependencies because it conflicts with the other's dependencies). 
 
 ### Advantages over AppImage
 
@@ -24,6 +24,8 @@ You can always compile:
 * ...with a different configuration. 
 
 # Setup
+
+> For manual installation steps, see [manual-install.md](./manual-install.md). 
 
 ### Dependencies 
 
@@ -49,14 +51,9 @@ cd build-freecad-asm3/tools
 
 ```
 ./setup-rootfs.sh
-# or, if you have FreeCAD source already cloned somewhere on your host:
-# ./setup-all.sh --freecad-src /path/to/existing/FreeCAD  
 ```
 
-> Your `existing/FreeCAD` clone will be copied into the container and it will never be used again. You are free to delete `/path/to/existing/FreeCAD` once your container is set up and FreeCAD is started compiling.
-
-
-For manual installation, see [manual-install.md](./manual-install.md).
+You can use an existing Debian container and/or an existing FreeCAD git clone on your host. See `./setup-rootfs.sh --help` for more options. 
 
 # Run 
 
