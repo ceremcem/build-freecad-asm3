@@ -43,7 +43,7 @@ cd build-freecad-asm3/tools
 
   * On a Debian host        : run `./create-container-on-debian-host.sh`
   * On an Arch Linux host   : run `./create-container-on-arch-host.sh`
-  * (Create a request for other Linux distros)
+  * On the other distros    : Manually create a Debian Buster container named `fc`.
 
 3. Setup the LXC container: 
 
