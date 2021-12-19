@@ -71,7 +71,7 @@ If you need to provide more detailed backtrace in case of a crash, see [debug-fr
 When you want to pull new commits and update your FreeCAD binary, issue the following command: 
 
 ```bash
-./update-fc.sh
+./tools/update-fc.sh
 ```
 
 This command will:
