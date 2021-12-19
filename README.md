@@ -19,23 +19,16 @@ Similar to the list on [FreeCAD Docker Wiki](https://wiki.freecadweb.org/Compile
 ### Advantages over AppImage
 
 You can always compile: 
-* the latest version by only fetching a few kB of source code.
-* any previous version. 
-* with a different configuration. 
-
-Like AppImage, "Setup once, run everywhere".
+* ...the latest version by only fetching a few kB of source code.
+* ...any previous version. 
+* ...with a different configuration. 
 
 # Setup
 
 ### Dependencies 
 
-1. LXC tools (`lxc-create`, `lxc-start`, etc...)
-
-### Out Of Memory situations 
-
-You may run into out of memory (oom) situations while compiling FreeCAD.
-
-In order to prevent a total freeze, you are strongly adviced to install `earlyoom` before the computer freezes: https://github.com/rfjakob/earlyoom
+1. LXC tools
+2. *(Optional)* `earlyoom`: In order to prevent a total freeze during compilation, you are strongly adviced to install https://github.com/rfjakob/earlyoom
 
 ### Install FreeCAD inside the Debian container
 
