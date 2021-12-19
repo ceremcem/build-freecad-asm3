@@ -15,7 +15,8 @@ show_help(){
 
         --name NAME         : Container name (default: $container_name)
         --lxc-path PATH     : LXC Path (default: $LXC_PATH)
-        --freecad-src SRC   : Use SRC as path to existing FreeCAD git source (skip for a new clone)
+        --freecad-src SRC   : Use SRC as path to copy existing FreeCAD git 
+                              source into the container
 
 HELP
 }
@@ -67,6 +68,9 @@ while [ $# -gt 0 ]; do
         --name) shift
             container_name="$1"
             ;;
+        --user) shift
+            user="$1"
+            ;;
         --lxc-path) shift
             LXC_PATH="$1"
             ;;
@@ -114,20 +118,22 @@ $CHROOT -- "export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin
         useradd -m $user; \
         usermod -a -G sudo $user; \
         echo "$user:$password" | chpasswd; \
-    }"
+    } && echo "User $user already exits.""
 
-builder_scripts="$LXC_PATH/$container_name/rootfs/home/$user/$(basename $(dirname $_sdir))"
+builder_scripts_on_rootfs="/home/$user/$(basename $(dirname $_sdir))"
+builder_scripts="$LXC_PATH/$container_name/rootfs/$builder_scripts_on_rootfs"
 if [[ ! -d "$builder_scripts" ]]; then
     cp -a "$(dirname "$_sdir")" "$builder_scripts"
-    chown 1000:1000 "$builder_scripts" -R
+    $CHROOT -- "chown $user $builder_scripts_on_rootfs -R"
 fi
 
-freecad_src_target="$LXC_PATH/$container_name/rootfs/home/$user/FreeCAD"
+freecad_src_target_on_rootfs="/home/$user/FreeCAD"
+freecad_src_target="$LXC_PATH/$container_name/rootfs/$freecad_src_target_on_rootfs"
 if [[ -n "$freecad_src" && ! -d "$freecad_src_target" ]]; then 
     echo "Provided FreeCAD git source, copying."
     is_on_btrfs $LXC_PATH && opt="--reflink=always" || opt=""
     cp -a $opt "$freecad_src" "$freecad_src_target"
-    chown 1000:1000 "$freecad_src_target" -R
+    $CHROOT -- "chown $user $freecad_src_target_on_rootfs -R"
 fi
 
 $CHROOT -- "cd /home/$user; $(basename $builder_scripts)/install-fc-deps.sh || dpkg --configure -a \
