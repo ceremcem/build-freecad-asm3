@@ -41,8 +41,8 @@ cd build-freecad-asm3/tools
 
 2. Install a Debian Buster LXC container: 
 
-  * On a Debian host: run `./create-container-on-debian-host.sh`
-  * On an Arch Linux host: Follow [this Gist](https://gist.github.com/ceremcem/d093287564b3729f6bfc61c5006ee0aa) but use `fc` instead of `mydebian` as the container name.
+  * On a Debian host        : run `./create-container-on-debian-host.sh`
+  * On an Arch Linux host   : run `./create-container-on-arch-host.sh`
   * (Create a request for other Linux distros)
 
 3. Setup the LXC container: 
