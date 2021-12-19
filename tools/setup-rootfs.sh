@@ -21,6 +21,10 @@ show_help(){
 HELP
 }
 
+is_on_btrfs(){
+    stat -f --format=%T "$1" | grep -q btrfs
+}
+
 end_message(){
     cat <<EOL
 Run FreeCAD anytime with:
@@ -94,17 +98,11 @@ done; set -- "${args_backup[@]-}"
 # "$@" is in the original state,
 # use ${args[@]} for new positional arguments  
 
+[[ -d "$LXC_PATH/$container_name" ]] || die "Please create the container ($container_name) first."
+
 [[ "$(whoami)" == "root" ]] || { sudo "$0" "$@"; exit 0; }
 
-is_on_btrfs(){
-    stat -f --format=%T "$1" | grep -q btrfs
-}
-
-is_on_btrfs "$LXC_PATH" && bdev="-B btrfs" || bdev=""
-
 CHROOT="$_sdir/run-in-chroot.sh -n $container_name --unattended"
-
-[[ -d "$LXC_PATH/$container_name" ]] || die "Please create the container first."
 
 # install basic packages
 packages="nano sudo git"   # tmux
