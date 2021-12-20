@@ -29,27 +29,16 @@ You can always compile:
 
 ### Dependencies 
 
-1. LXC tools
+1. LXC tools (will be automatically installed by `create-container.sh`)
 2. *(Optional)* `earlyoom`: In order to prevent a total freeze during compilation, you are strongly adviced to install https://github.com/rfjakob/earlyoom
 
 ### Install FreeCAD inside the Debian container
 
-1. Get the sources:
 
 ```bash
 git clone https://github.com/ceremcem/build-freecad-asm3
 cd build-freecad-asm3/tools
-```
-
-2. Create a Debian Buster LXC container: 
-
-  * On a Debian host        : run `./create-container-on-debian-host.sh`
-  * On an Arch Linux host   : run `./create-container-on-arch-host.sh`
-  * On the other distros    : Manually create a Debian Buster container named `fc`.
-
-3. Setup the LXC container: 
-
-```
+./create-container.sh --host debian # possible hosts: debian, arch
 ./setup-rootfs.sh
 ```
 
