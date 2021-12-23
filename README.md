@@ -65,6 +65,15 @@ This command will:
 * Pull new commits into the FreeCAD clone at `/var/lib/lxc/fc/rootfs/home/fc/FreeCAD`
 * Recompile the source code inside the container
 
+# Update this toolset inside the container
+
+This tool is copied into the container on setup. Whenever you need to update that copy inside the container, issue the following command on your host:
+
+```
+./tools/update-builder.sh
+```
+
+
 ### Using a specific branch, remote or commit
 
 If you need to compile the FreeCAD against a specific branch, remote or commit, edit the configuration file within the container and rebuild FreeCAD:

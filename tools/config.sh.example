@@ -1,0 +1,3 @@
+# Set custom container name and/or container user
+container_name=mydebian
+container_user=myuser
