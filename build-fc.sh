@@ -101,12 +101,12 @@ if ! $only_compile; then
         echo "Branch \"$branch\" exists."
         echo "Pulling new commits"
         git fetch $remote $branch
-        git diff --stat HEAD FETCH_HEAD
+        git --no-pager diff --stat HEAD FETCH_HEAD
         git reset --hard FETCH_HEAD
     else
         echo "Branch \"$branch\" does not exist, fetching."
         git fetch $remote $branch
-        git diff --stat HEAD FETCH_HEAD
+        git --no-pager diff --stat HEAD FETCH_HEAD
         git checkout FETCH_HEAD -b $branch
     fi
     [[ -n ${commit:-} ]] && git checkout $commit
