@@ -1,6 +1,34 @@
 # Build FreeCAD Assembly3
 
-These scripts automates the `LinkStage3` building process, creates the FreeCAD binary in `~/fc-build/Release/bin/`. 
+These scripts automates the `LinkStage3` building process and Assembly3 WB installation. In order to create a robust build environment, a Debian container is created and FreeCAD is built and run inside it. 
+
+This approach is like Docker, but the container creation (`create-container.sh`) and target environment setup (`setup-rootfs.sh`) is separated. Why? Because I don't understand Docker yet. 
+
+# Using these scripts directly on Debian: 
+
+If you have Debian, you can simply download FreeCAD source, install the dependencies, compile FreeCAD, compile and install Assembly3 WB by: 
+
+```
+git clone https://github.com/ceremcem/build-freecad-asm3
+cd build-freecad-asm3
+./install-fc-deps.sh || dpkg --configure -a
+./build-fc.sh  # Run whenever you need to update FreeCAD
+```
+
+To run FreeCAD: `~/fc-build/Release/bin/FreeCAD`
+
+# Using the container approach
+
+*TL;DR;*
+
+```bash
+git clone https://github.com/ceremcem/build-freecad-asm3
+cd build-freecad-asm3/tools
+./create-container.sh --host debian # possible hosts: debian, arch
+./setup-rootfs.sh
+./freecad.sh     # to run FreeCAD
+./update-fc.sh   # to update FreeCAD
+```
 
 ### Advantages 
 
