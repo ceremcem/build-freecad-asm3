@@ -4,11 +4,11 @@
 #define FCVersionMinor "20"
 #define FCVersionName  "Vulcan"
 // test: $Format:Hash (%H), Date: %ci$
-#define FCRevision      "30668 (Git)"      //Highest committed revision number
-#define FCRevisionDate  "2021/12/10 14:26:43"     //Date of highest committed revision
+#define FCRevision      "30918 (Git)"      //Highest committed revision number
+#define FCRevisionDate  "2022/03/30 09:59:46"     //Date of highest committed revision
 #define FCRepositoryURL "Unknown"      //Repository URL of the working copy
 
 // Git relevant stuff
-#define FCRepositoryHash   "7edee4b30be4e74c2d38b560f19caf52ba114e8f"
+#define FCRepositoryHash   "a3a4433718584657db57a48a37e625ce57cf984f"
 #define FCRepositoryBranch "LinkDaily"
 

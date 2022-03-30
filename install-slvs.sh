@@ -34,9 +34,13 @@ cd $asm3/slvs
 git submodule update --init extlib/libdxfrw
 mkdir -p build && cd build
 cmake -DBUILD_PYTHON=1 -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python3' -Wno-dev ..
-make _slvs
+make
+#sudo make install # In order not to use "sudo", we do "make local-install"
+# start "make local-install"
+set -x
 mkdir -p $py_slvs_dir
 cp $asm3/slvs/build/src/swig/python/{slvs.py,_slvs.so} $py_slvs_dir
 touch $py_slvs_dir/__init__.py
-
+set +x
+# end of "make local-install"
 echo "$(basename $py_slvs_dir) is compiled."
