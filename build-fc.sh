@@ -137,6 +137,8 @@ t0=$SECONDS
 opts=
 $disable_fem || opts="$opts -DBUILD_FEM_NETGEN=1"
 
+echo "Calculated build command:"
+set -x
 (cd $build_dir && cmake ../../FreeCAD \
 	-DFREECAD_USE_OCC_VARIANT="Official Version" \
 	-DCMAKE_BUILD_TYPE=$build_type \
@@ -145,6 +147,7 @@ $disable_fem || opts="$opts -DBUILD_FEM_NETGEN=1"
     -DBUILD_ENABLE_CXX_STD:STRING=C++17 \
     $opts \
 )
+set +x
 
 t1=$SECONDS
 echo "-----------------------------------------------"
